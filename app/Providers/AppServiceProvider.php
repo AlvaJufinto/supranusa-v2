@@ -18,9 +18,10 @@ class AppServiceProvider extends ServiceProvider
 	{
 		View::composer('layouts.app', function ($view) {
 			$settings = Setting::all()->keyBy('key');
-			$navBrands = Brand::with(['products' => fn($q) => $q->active()->ordered()->limit(10)])
+			$navBrands = Brand::with(['products' => fn($q) => $q->active()->ordered()])
 				->ordered()
-				->get();
+				->get()
+				->filter(fn($b) => $b->products->count() > 0);
 			$view->with(compact('settings', 'navBrands'));
 		});
 	}
