@@ -129,7 +129,8 @@
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
 
               <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                <svg class="w-5 h-5 text-brand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="text-brand h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
                 <div>
@@ -139,7 +140,8 @@
               </div>
 
               <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                <svg class="w-5 h-5 text-brand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="text-brand h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 21l-1-1C5 15 2 12 2 8a6 6 0 0112 0c0 4-3 7-9 12l-1 1" />
                 </svg>
                 <div>
@@ -149,7 +151,8 @@
               </div>
 
               <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                <svg class="w-5 h-5 text-brand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="text-brand h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" />
                 </svg>
                 <div>
@@ -195,7 +198,8 @@
             style="scrollbar-width: none;">
 
             @foreach ($brands as $brand)
-              <div class="h-56 w-56 shrink-0 snap-start overflow-hidden rounded-2xl ring-2 ring-slate-200 sm:w-64 cursor-pointer transition-all duration-300 hover:ring-brand group"
+              <div
+                class="hover:ring-brand group h-56 w-56 shrink-0 cursor-pointer snap-start overflow-hidden rounded-2xl ring-2 ring-slate-200 transition-all duration-300 sm:w-64"
                 data-brand-id="{{ $brand->id }}">
 
                 @if ($brand->image)
@@ -226,15 +230,15 @@
           </div>
 
           <button id="brandPrev" type="button" aria-label="Previous"
-            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white border border-slate-200 shadow hover:shadow-md hover:border-brand transition disabled:opacity-40">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="hover:border-brand absolute left-0 top-1/2 inline-flex h-10 w-10 -translate-x-2 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow transition hover:shadow-md disabled:opacity-40">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           <button id="brandNext" type="button" aria-label="Next"
-            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white border border-slate-200 shadow hover:shadow-md hover:border-brand transition disabled:opacity-40">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="hover:border-brand absolute right-0 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 translate-x-2 items-center justify-center rounded-full border border-slate-200 bg-white shadow transition hover:shadow-md disabled:opacity-40">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -275,7 +279,8 @@
               @if ($project->thumbnail)
                 <div class="aspect-video bg-slate-100">
 
-                  <img src="{{ $project->thumbnail }}" alt="{{ $project->title }}" class="h-full w-full object-cover">
+                  <img src="{{ $project->thumbnail }}" alt="{{ $project->title }}"
+                    class="h-full w-full object-cover">
 
                 </div>
               @else
@@ -376,11 +381,11 @@
 
         </div>
 
-        <div id="catalogTabs" class="flex flex-wrap gap-2 border-b border-slate-200 mb-8">
+        <div id="catalogTabs" class="mb-8 flex flex-wrap gap-2 border-b border-slate-200">
 
           @foreach ($brands as $index => $brand)
             <button data-catalog-tab="catalog-{{ $brand->id }}"
-              class="catalog-tab-btn px-4 py-2 rounded-t-lg border border-b-0 border-slate-200 bg-white text-brand font-semibold transition @if($index === 0) border-brand bg-slate-50 @endif">
+              class="catalog-tab-btn text-brand @if ($index === 0) border-brand bg-slate-50 @endif rounded-t-lg border border-b-0 border-slate-200 bg-white px-4 py-2 font-semibold transition">
               {{ $brand->name }}
             </button>
           @endforeach
@@ -390,35 +395,39 @@
         <div class="rounded-b-xl border border-t-0 border-slate-200 bg-slate-50 p-6">
 
           @foreach ($brands as $index => $brand)
-            <div id="catalog-{{ $brand->id }}" class="catalog-pane @if($index !== 0) hidden @endif">
+            <div id="catalog-{{ $brand->id }}"
+              class="catalog-pane @if ($index !== 0) hidden @endif">
 
               @if (isset($productsByBrand[$brand->id]) && $productsByBrand[$brand->id]->count())
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
                   @foreach ($productsByBrand[$brand->id] as $product)
-                    <a href="{{ route('products.show', $product->slug) }}" class="block rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition">
+                    <a href="{{ route('products.show', $product->slug) }}"
+                      class="block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
 
                       @if ($product->image)
                         <div class="aspect-video bg-slate-100">
-                          <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                          <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                            class="h-full w-full object-cover">
                         </div>
                       @else
-                        <div class="aspect-video bg-slate-100 flex items-center justify-center text-slate-400">
+                        <div class="flex aspect-video items-center justify-center bg-slate-100 text-slate-400">
                           No Image
                         </div>
                       @endif
 
                       <div class="p-4">
-                        <h3 class="font-bold text-slate-800 mb-2">{{ $product->name }}</h3>
+                        <h3 class="mb-2 font-bold text-slate-800">{{ $product->name }}</h3>
                         @if ($product->short_description)
-                          <p class="text-sm text-slate-600 line-clamp-2">{{ $product->short_description }}</p>
+                          <p class="line-clamp-2 text-sm text-slate-600">{{ $product->short_description }}</p>
                         @endif
                         @if ($product->file)
                           <span onclick="event.preventDefault(); window.open('{{ $product->file }}', '_blank')"
-                            class="mt-3 inline-flex items-center gap-1 text-sm text-brand hover:underline cursor-pointer">
+                            class="text-brand mt-3 inline-flex cursor-pointer items-center gap-1 text-sm hover:underline">
                             View Catalog
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
                           </span>
                         @endif
@@ -429,7 +438,7 @@
 
                 </div>
               @else
-                <div class="text-center py-12 text-slate-500">
+                <div class="py-12 text-center text-slate-500">
                   <p>No products available for this brand yet.</p>
                 </div>
               @endif
@@ -452,7 +461,7 @@
     <div class="mx-auto max-w-7xl px-6">
 
       @if (session('success'))
-        <div class="mb-8 rounded-lg bg-green-100 p-4 text-green-800 text-center">{{ session('success') }}</div>
+        <div class="mb-8 rounded-lg bg-green-100 p-4 text-center text-green-800">{{ session('success') }}</div>
       @endif
 
       <div class="mb-12 text-center">
@@ -651,12 +660,6 @@
   </section>
 
 
-  {{-- Back to Top --}}
-  <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
-    class="bg-brand hover:bg-brand-hover pointer-events-none fixed bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full text-white opacity-0 shadow-lg transition"
-    style="transition: opacity 0.3s;">
-    ↑
-  </button>
 
 
   <script>
@@ -679,7 +682,10 @@
         function scrollByCard(dir) {
           const card = rail.querySelector('[data-brand-id]');
           const step = card ? card.getBoundingClientRect().width * 1.25 : 300;
-          rail.scrollBy({ left: dir * step, behavior: 'smooth' });
+          rail.scrollBy({
+            left: dir * step,
+            behavior: 'smooth'
+          });
           updateArrowState();
         }
 
@@ -691,7 +697,9 @@
 
         prevBtn.addEventListener('click', () => scrollByCard(-1));
         nextBtn.addEventListener('click', () => scrollByCard(1));
-        rail.addEventListener('scroll', updateArrowState, { passive: true });
+        rail.addEventListener('scroll', updateArrowState, {
+          passive: true
+        });
         updateArrowState();
       }
 
