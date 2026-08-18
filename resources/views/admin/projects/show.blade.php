@@ -28,7 +28,7 @@
     @if($project->thumbnail)
     <div>
         <label class="block text-sm font-medium text-slate-500 mb-1">Thumbnail</label>
-        <img src="{{ Storage::url($project->thumbnail) }}" class="h-32 object-cover rounded border">
+        <img src="{{ asset_url($project->thumbnail) }}" class="h-32 object-cover rounded border">
     </div>
     @endif
     @if($project->description)

@@ -24,7 +24,7 @@
     @if($article->thumbnail)
     <div>
         <label class="block text-sm font-medium text-slate-500 mb-1">Thumbnail</label>
-        <img src="{{ Storage::url($article->thumbnail) }}" class="h-32 object-cover rounded border">
+        <img src="{{ asset_url($article->thumbnail) }}" class="h-32 object-cover rounded border">
     </div>
     @endif
     @if($article->excerpt)

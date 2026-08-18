@@ -3,98 +3,186 @@
 
 @section('content')
 
-@if (!$product)
-  <section class="py-16 lg:py-24 bg-slate-50 min-h-[60vh] flex items-center">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <div class="rounded-2xl border border-slate-200 bg-white p-12 shadow-soft">
-        <svg class="mx-auto h-16 w-16 text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <h1 class="text-2xl font-extrabold text-slate-800 mb-2">Product Not Found</h1>
-        <p class="text-slate-500 mb-6">The product you're looking for doesn't exist or has been removed.</p>
-        <a href="{{ route('products.index') }}" class="inline-flex items-center gap-2 bg-brand hover:bg-brand-hover text-white px-6 py-3 rounded-lg font-semibold transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back to Products
-        </a>
-      </div>
-    </div>
-  </section>
-@else
-  <section class="py-16 lg:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
+  @if (!$product)
 
-      <nav class="flex items-center gap-2 text-sm text-slate-500 mb-8">
-        <a href="{{ route('home') }}" class="hover:text-brand">Home</a>
-        <span>/</span>
-        <a href="{{ route('products.index') }}{{ request('brand') || request('sort') || request('search') ? '?' . http_build_query(array_filter(request()->only(['brand','sort','search']))) : '' }}" class="hover:text-brand">Products</a>
-        @if ($product->brand)
-          <span>/</span>
-          <a href="{{ route('products.index') }}?brand={{ $product->brand->id }}" class="hover:text-brand">{{ $product->brand->name }}</a>
-        @endif
-        <span>/</span>
-        <span class="text-slate-700">{{ $product->name }}</span>
-      </nav>
+    {{-- Product Not Found --}}
+    <section class="flex min-h-[65vh] items-center bg-slate-50 py-16 lg:py-24">
+      <div class="mx-auto w-full max-w-7xl px-6">
+        <div class="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
 
-      <div class="grid lg:grid-cols-12 gap-12">
+          <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            <svg class="h-8 w-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
 
-        <div class="lg:col-span-5">
-          @if ($product->image)
-            <div class="aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
-              <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-            </div>
-          @else
-            <div class="aspect-square rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center">
-              <span class="text-slate-400">No Image</span>
-            </div>
-          @endif
-
-          @if ($product->brand)
-            <div class="mt-6 p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center gap-4">
-              @if ($product->brand->image)
-                <img src="{{ $product->brand->image }}" alt="{{ $product->brand->name }}" class="h-12 w-auto object-contain">
-              @endif
-              <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide">Brand</p>
-                <p class="font-semibold text-slate-800">{{ $product->brand->name }}</p>
-              </div>
-            </div>
-          @endif
-        </div>
-
-        <div class="lg:col-span-7">
-          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-4">
-            {{ $product->name }}
+          <h1 class="mb-2 text-2xl font-extrabold text-slate-800">
+            Product Not Found
           </h1>
 
-          @if ($product->short_description)
-            <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-              {{ $product->short_description }}
-            </p>
+          <p class="mb-8 text-sm leading-relaxed text-slate-500 sm:text-base">
+            The product you're looking for doesn't exist or has been removed.
+          </p>
+
+          <a href="{{ route('products.index') }}"
+            class="bg-brand hover:bg-brand-hover inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white transition">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+
+            Back to Products
+          </a>
+
+        </div>
+      </div>
+    </section>
+  @else
+    {{-- Product Detail --}}
+    <section class="bg-white py-12 sm:py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-6">
+
+        {{-- Breadcrumb --}}
+        <nav class="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
+          <a href="{{ route('home') }}" class="hover:text-brand transition">
+            Home
+          </a>
+
+          <span>/</span>
+
+          <a href="{{ route('products.index') }}{{ request('brand') || request('sort') || request('search') ? '?' . http_build_query(array_filter(request()->only(['brand', 'sort', 'search']))) : '' }}"
+            class="hover:text-brand transition">
+            Products
+          </a>
+
+          @if ($product->brand)
+            <span>/</span>
+
+            <a href="{{ route('products.index') }}?brand={{ $product->brand->id }}" class="hover:text-brand transition">
+              {{ $product->brand->name }}
+            </a>
           @endif
 
-          @if ($product->description)
-            <div class="markdown mb-8">
-              {!! $product->description !!}
+          <span>/</span>
+
+          <span class="max-w-[220px] truncate font-medium text-slate-700 sm:max-w-none">
+            {{ $product->name }}
+          </span>
+        </nav>
+
+        {{-- Product Overview --}}
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+
+          {{-- Left Column --}}
+          <div class="lg:col-span-5">
+
+            {{-- Product Image --}}
+            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+              @if ($product->image)
+                <div class="aspect-square">
+                  <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
+                </div>
+              @else
+                <div class="flex aspect-square items-center justify-center">
+                  <div class="text-center">
+                    <svg class="mx-auto mb-3 h-12 w-12 text-slate-300" fill="none" stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M4 16l4.586-4.586a2 2 0 016.828 0L20 16m-2-2l1.586-1.586a2 2 0 012.828 0L22 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+
+                    <p class="text-sm font-medium text-slate-400">
+                      No Image Available
+                    </p>
+                  </div>
+                </div>
+              @endif
             </div>
-          @endif
 
-          @if ($product->file)
-            <div class="mt-8">
-              <h2 class="text-xl font-bold text-slate-800 mb-4">Product Catalog</h2>
-              <div class="rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-                <embed src="{{ $product->file }}" type="application/pdf" width="100%" height="600" class="w-full">
+            {{-- Brand Card --}}
+            @if ($product->brand)
+              <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <div class="flex items-center gap-5 sm:gap-6">
+
+                  @if ($product->brand->image)
+                    <div
+                      class="flex h-36 w-48 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-4 sm:h-40 sm:w-56 sm:p-5">
+
+                      <img src="{{ $product->brand->image }}" alt="{{ $product->brand->name }}"
+                        class="max-h-full max-w-full object-contain">
+                    </div>
+                  @endif
+
+                  <div class="min-w-0">
+                    <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                      Brand
+                    </p>
+
+                    <a href="{{ route('products.index') }}?brand={{ $product->brand->id }}"
+                      class="hover:text-brand text-xl font-semibold text-slate-800 transition sm:text-2xl">
+                      {{ $product->brand->name }}
+                    </a>
+                  </div>
+
+                </div>
               </div>
+            @endif
+
+          </div>
+
+          {{-- Right Column --}}
+          <div class="lg:col-span-7">
+
+            {{-- Product Header --}}
+            <div class="border-b border-slate-200 pb-6">
+              <h1 class="text-3xl font-extrabold leading-tight tracking-tight text-slate-800 sm:text-4xl">
+                {{ $product->name }}
+              </h1>
+
+              @if ($product->short_description)
+                <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+                  {{ $product->short_description }}
+                </p>
+              @endif
             </div>
-          @endif
+
+            {{-- Description --}}
+            @if ($product->description)
+              <div class="markdown mt-8">
+                {!! $product->description !!}
+              </div>
+            @endif
+
+          </div>
 
         </div>
 
-      </div>
+        {{-- Product Catalog --}}
+        @if ($product->file)
+          <div class="mt-12 border-t border-slate-200 pt-10 lg:mt-16 lg:pt-12">
 
-    </div>
-  </section>
-@endif
+            <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 class="text-2xl font-bold text-slate-800">
+                  Product Catalog
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                  View the complete product catalog below.
+                </p>
+              </div>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm">
+              <embed src="{{ $product->file }}" type="application/pdf" width="100%" height="700" class="w-full">
+            </div>
+
+          </div>
+        @endif
+
+      </div>
+    </section>
+
+  @endif
 
 @endsection

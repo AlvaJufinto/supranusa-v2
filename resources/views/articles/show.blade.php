@@ -13,7 +13,7 @@
         </nav>
         @if($article->thumbnail)
         <div class="aspect-video bg-slate-100 rounded-2xl overflow-hidden mb-8">
-            <img src="{{ Storage::url($article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
+            <img src="{{ asset_url($article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
         </div>
         @endif
         <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-4">{{ $article->title }}</h1>

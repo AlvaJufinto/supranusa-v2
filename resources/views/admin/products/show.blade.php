@@ -20,7 +20,7 @@
     @if($product->image)
     <div>
         <label class="block text-sm font-medium text-slate-500 mb-1">Image</label>
-        <img src="{{ Storage::url($product->image) }}" class="h-40 object-contain rounded border">
+        <img src="{{ asset_url($product->image) }}" class="h-40 object-contain rounded border">
     </div>
     @endif
     @if($product->short_description)
@@ -38,7 +38,7 @@
     @if($product->file)
     <div>
         <label class="block text-sm font-medium text-slate-500 mb-1">Catalog</label>
-        <a href="{{ Storage::url($product->file) }}" target="_blank" class="text-brand hover:underline">View PDF</a>
+        <a href="{{ asset_url($product->file) }}" target="_blank" class="text-brand hover:underline">View PDF</a>
     </div>
     @endif
 </div>

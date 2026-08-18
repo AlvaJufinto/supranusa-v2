@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Observers\AssetUploadObserver;
+use App\Services\AssetServer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -23,11 +24,11 @@ class ArticleController extends Controller
 		return view('admin.articles.create');
 	}
 
-	public function store(Request $request): RedirectResponse
+	public function store(Request $request, AssetServer $assetServer): RedirectResponse
 	{
 		$data = $request->validate([
 			'title' => 'required|string|max:255',
-			'thumbnail_file' => 'nullable|image|max:5120',
+			'thumbnail_file' => 'nullable|image|max:51200',
 			'excerpt' => 'nullable|string',
 			'content' => 'nullable|string',
 			'status' => 'required|in:published,draft',
@@ -40,11 +41,16 @@ class ArticleController extends Controller
 
 		$data['slug'] = Str::slug($data['title']);
 
+		$pendingUploads = [];
 		if ($request->hasFile('thumbnail_file')) {
-			$data['thumbnail'] = $request->file('thumbnail_file')->store('articles', 'public');
+			$upload = $assetServer->upload($request->file('thumbnail_file'));
+			$data['thumbnail'] = $upload['url'];
+			$pendingUploads['thumbnail'] = $upload;
 		}
 
-		Article::create($data);
+		$article = new Article($data);
+		AssetUploadObserver::setPendingUploads($article, $pendingUploads);
+		$article->save();
 
 		return redirect()->route('admin.articles.index')->with('success', 'Article created.');
 	}
@@ -59,11 +65,11 @@ class ArticleController extends Controller
 		return view('admin.articles.show', compact('article'));
 	}
 
-	public function update(Request $request, Article $article): RedirectResponse
+	public function update(Request $request, Article $article, AssetServer $assetServer): RedirectResponse
 	{
 		$data = $request->validate([
 			'title' => 'required|string|max:255',
-			'thumbnail_file' => 'nullable|image|max:5120',
+			'thumbnail_file' => 'nullable|image|max:51200',
 			'excerpt' => 'nullable|string',
 			'content' => 'nullable|string',
 			'status' => 'required|in:published,draft',
@@ -76,13 +82,14 @@ class ArticleController extends Controller
 
 		$data['slug'] = Str::slug($data['title']);
 
+		$pendingUploads = [];
 		if ($request->hasFile('thumbnail_file')) {
-			if ($article->thumbnail) {
-				Storage::disk('public')->delete($article->thumbnail);
-			}
-			$data['thumbnail'] = $request->file('thumbnail_file')->store('articles', 'public');
+			$upload = $assetServer->upload($request->file('thumbnail_file'));
+			$data['thumbnail'] = $upload['url'];
+			$pendingUploads['thumbnail'] = $upload;
 		}
 
+		AssetUploadObserver::setPendingUploads($article, $pendingUploads);
 		$article->update($data);
 
 		return redirect()->route('admin.articles.index')->with('success', 'Article updated.');
@@ -90,9 +97,6 @@ class ArticleController extends Controller
 
 	public function destroy(Article $article): RedirectResponse
 	{
-		if ($article->thumbnail) {
-			Storage::disk('public')->delete($article->thumbnail);
-		}
 		$article->delete();
 		return redirect()->route('admin.articles.index')->with('success', 'Article deleted.');
 	}

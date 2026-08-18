@@ -14,7 +14,7 @@
             <a href="{{ route('articles.show', $article->slug) }}" class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-soft hover:shadow-md transition">
                 @if($article->thumbnail)
                 <div class="aspect-video bg-slate-100">
-                    <img src="{{ Storage::url($article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
+                    <img src="{{ asset_url($article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
                 </div>
                 @else
                 <div class="aspect-video bg-slate-100 flex items-center justify-center text-slate-400">No Image</div>

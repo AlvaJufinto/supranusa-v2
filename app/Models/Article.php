@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\AssetUploadObserver;
 
 class Article extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title', 'slug', 'thumbnail', 'excerpt', 'content',
         'status', 'published_at', 'meta_title', 'meta_description',
@@ -24,5 +26,10 @@ class Article extends Model
     public function scopeDraft($query)
     {
         return $query->where('status', 'draft');
+    }
+
+    protected static function booted(): void
+    {
+        static::observe(AssetUploadObserver::class);
     }
 }

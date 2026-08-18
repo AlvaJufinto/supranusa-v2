@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\AssetUploadObserver;
 
 class Product extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'brand_id', 'name', 'slug', 'short_description',
         'description', 'image', 'file', 'order', 'status'
@@ -29,5 +31,10 @@ class Product extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order');
+    }
+
+    protected static function booted(): void
+    {
+        static::observe(AssetUploadObserver::class);
     }
 }
