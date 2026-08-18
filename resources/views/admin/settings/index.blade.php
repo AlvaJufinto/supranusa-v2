@@ -87,6 +87,10 @@
           <label class="mb-1 block text-sm font-medium">Phone</label>
           <input type="text" name="contact_phone" value="{{ $settings['contact_phone']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
+
+          <label class="mb-1 block text-sm font-medium">Whatsapp</label>
+          <input type="text" name="contact_whatsapp" value="{{ $settings['contact_whatsapp']->value ?? '' }}">
+
           <label class="mb-1 mt-4 block text-sm font-medium">Fax</label>
           <input type="text" name="contact_fax" value="{{ $settings['contact_fax']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
