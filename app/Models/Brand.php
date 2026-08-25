@@ -9,7 +9,7 @@ use App\Observers\AssetUploadObserver;
 
 class Brand extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
 	protected $fillable = ['name', 'slug', 'description', 'image', 'brand_pdf', 'order'];
 
@@ -21,6 +21,11 @@ class Brand extends Model
 	public function scopeOrdered($query)
 	{
 		return $query->orderBy('order');
+	}
+
+	public function projects(): HasMany
+	{
+		return $this->hasMany(Project::class, 'brand_id');
 	}
 
 	protected static function booted(): void

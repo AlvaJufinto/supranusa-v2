@@ -30,7 +30,7 @@ class BrandController extends Controller
 			'name' => 'required|string|max:255',
 			'description' => 'nullable|string',
 			'image' => 'nullable|file|image|max:51200',
-			'brand_pdf' => 'nullable|file|max:10240',
+			'brand_pdf' => 'nullable|file|max:102400',
 			'order' => 'nullable|integer',
 		]);
 
@@ -71,7 +71,7 @@ class BrandController extends Controller
 			'name' => 'required|string|max:255',
 			'description' => 'nullable|string',
 			'image' => 'nullable|file|image|max:51200',
-			'brand_pdf' => 'nullable|file|max:10240',
+			'brand_pdf' => 'nullable|file|max:102400',
 			'order' => 'nullable|integer',
 		]);
 

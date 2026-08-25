@@ -22,7 +22,7 @@ class MediaController extends Controller
 	public function store(Request $request, AssetServer $assetServer): RedirectResponse
 	{
 		$request->validate([
-			'file' => 'required|file|max:10240',
+			'file' => 'required|file|max:102400',
 		]);
 
 		$file = $request->file('file');

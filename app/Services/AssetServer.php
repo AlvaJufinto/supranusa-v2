@@ -12,7 +12,7 @@ class AssetServer
     {
         $endpoint = config('services.asset_server.url') . '/post';
 
-        $response = Http::timeout(30)
+        $response = Http::timeout(60)
             ->attach(
                 'file',
                 fopen($file->getRealPath(), 'r'),

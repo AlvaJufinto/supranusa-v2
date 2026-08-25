@@ -6,7 +6,6 @@
   {{-- Hero --}}
   <section id="home" class="relative flex min-h-[600px] items-center"
     style="background-image: url('/assets/bg/home.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
     <div class="absolute inset-0 bg-gradient-to-br from-[#9d1f20]/80 via-[#9d1f20]/40 to-black/30"></div>
 
     <div class="relative mx-auto w-full max-w-7xl px-6 py-24">
@@ -190,7 +189,7 @@
 
         <div class="relative">
 
-          <div id="brandRail" class="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4"
+          <div id="brandRail" class="ml-4 flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth p-4"
             style="scrollbar-width: none;">
 
             @foreach ($brands as $brand)
@@ -268,72 +267,97 @@
 
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-
           @foreach ($featuredProjects as $project)
-            <div class="shadow-soft overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            @php
+              $tags = $project->tags;
 
-              @if ($project->thumbnail)
-                <div class="aspect-video bg-slate-100">
+              if (is_string($tags)) {
+                  $tags = json_decode($tags, true);
+              }
 
-                  <img src="{{ $project->thumbnail }}" alt="{{ $project->title }}"
-                    class="h-full w-full object-cover">
+              $tags = is_array($tags) ? $tags : [];
+            @endphp
 
-                </div>
-              @else
-                <div class="flex aspect-video items-center justify-center bg-slate-100 text-sm text-slate-400">
-                  No Image
-                </div>
-              @endif
+            <article
+              class="shadow-soft group flex h-full min-h-[50px] flex-col rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
 
+              {{-- Header --}}
+              <div class="flex items-start justify-between gap-4">
 
-              <div class="p-4">
+                <div class="min-w-0">
 
-                <div class="mb-2 flex items-center justify-between text-xs text-slate-500">
-
+                  {{-- Brand --}}
                   @if ($project->brand)
-                    <span class="rounded border border-slate-200 px-2 py-0.5">
+                    <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
                       {{ $project->brand }}
-                    </span>
+                    </p>
                   @endif
 
+                  {{-- Title --}}
+                  <h3 class="line-clamp-2 min-h-[3.5rem] text-lg font-semibold leading-7 text-slate-900">
+                    {{ $project->title }}
+                  </h3>
+
+                  {{-- Company --}}
+                  <div class="mt-1 min-h-[1.25rem]">
+                    @if ($project->company)
+                      <p class="truncate text-sm text-slate-500">
+                        {{ $project->company }}
+                      </p>
+                    @endif
+                  </div>
+
+                </div>
+
+                {{-- Year --}}
+                <div class="shrink-0">
                   @if ($project->year)
-                    <span>
+                    <span
+                      class="inline-flex rounded-full bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-500 ring-1 ring-inset ring-slate-200">
                       {{ $project->year }}
                     </span>
                   @endif
-
                 </div>
 
+              </div>
 
-                <h3 class="mb-1 font-semibold text-slate-800">
-                  {{ $project->title }}
-                </h3>
-
-
-                @if ($project->company)
-                  <p class="text-xs text-slate-400">
-                    {{ $project->company }}
+              {{-- <div class="mt-4 min-h-[4.5rem]">
+                @if ($project->description)
+                  <p class="line-clamp-3 text-sm leading-6 text-slate-500">
+                    {{ $project->description }}
                   </p>
                 @endif
+              </div> --}}
 
 
-                @if (is_array($project->tags) && count($project->tags))
-                  <div class="mt-3 flex flex-wrap gap-1">
+              {{-- Tags --}}
+              <div class="mt-auto pt-5">
 
-                    @foreach (array_slice($project->tags, 0, 2) as $tag)
-                      <span class="rounded border border-slate-200 px-2 py-0.5 text-xs text-slate-500">
+                @if (count($tags))
+                  <div class="flex flex-wrap content-start gap-1.5">
+
+                    @foreach (array_slice($tags, 0, 4) as $tag)
+                      <span
+                        class="rounded-md bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-500 ring-1 ring-inset ring-slate-200">
                         {{ $tag }}
                       </span>
                     @endforeach
 
+                    @if (count($tags) > 4)
+                      <span class="rounded-md bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-400">
+                        +{{ count($tags) - 4 }}
+                      </span>
+                    @endif
+
                   </div>
+                @else
+                  <div class="min-h-[1.75rem]"></div>
                 @endif
 
               </div>
 
-            </div>
+            </article>
           @endforeach
-
         </div>
 
 
@@ -405,6 +429,19 @@
                         <div class="aspect-video bg-slate-100">
                           <img src="{{ $product->image }}" alt="{{ $product->name }}"
                             class="h-full w-full object-cover">
+                        </div>
+                      @elseif ($product->file)
+                        <div class="relative aspect-video overflow-hidden bg-slate-100"
+                          data-pdf-preview="{{ $product->file }}">
+                          <canvas class="pdf-thumbnail h-full w-full object-cover"></canvas>
+                          <div class="pdf-loading absolute inset-0 flex items-center justify-center bg-slate-100">
+                            <div class="text-center">
+                              <div
+                                class="mx-auto mb-1 h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-slate-700">
+                              </div>
+                              <span class="text-[10px] text-slate-500">Loading...</span>
+                            </div>
+                          </div>
                         </div>
                       @else
                         <div class="flex aspect-video items-center justify-center bg-slate-100 text-slate-400">

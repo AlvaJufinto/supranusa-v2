@@ -47,6 +47,16 @@
                 <div class="aspect-video bg-slate-100">
                   <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
                 </div>
+              @elseif ($product->file)
+                <div class="relative aspect-video overflow-hidden bg-slate-100" data-pdf-preview="{{ $product->file }}">
+                  <canvas class="pdf-thumbnail h-full w-full object-cover"></canvas>
+                  <div class="pdf-loading absolute inset-0 flex items-center justify-center bg-slate-100">
+                    <div class="text-center">
+                      <div class="mx-auto mb-1 h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-slate-700"></div>
+                      <span class="text-[10px] text-slate-500">Loading...</span>
+                    </div>
+                  </div>
+                </div>
               @else
                 <div class="flex aspect-video items-center justify-center bg-slate-100 text-slate-400">No Image</div>
               @endif

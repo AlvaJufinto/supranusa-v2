@@ -34,7 +34,7 @@ class ProductController extends Controller
 			'short_description' => 'nullable|string',
 			'description' => 'nullable|string',
 			'image_file' => 'nullable|image|max:51200',
-			'file' => 'nullable|file|max:10240',
+			'file' => 'nullable|file|max:204800',
 			'order' => 'nullable|integer',
 			'status' => 'required|in:active,inactive',
 		]);
@@ -80,7 +80,7 @@ class ProductController extends Controller
 			'short_description' => 'nullable|string',
 			'description' => 'nullable|string',
 			'image_file' => 'nullable|image|max:51200',
-			'file' => 'nullable|file|max:10240',
+			'file' => 'nullable|file|max:204800',
 			'order' => 'nullable|integer',
 			'status' => 'required|in:active,inactive',
 		]);
