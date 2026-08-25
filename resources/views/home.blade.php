@@ -1,516 +1,332 @@
 @extends('layouts.app')
+
 @section('title', 'Home')
 
 @section('content')
 
-  {{-- Hero --}}
+  {{-- Hero Section --}}
   <section id="home" class="relative flex min-h-[600px] items-center"
     style="background-image: url('/assets/bg/home.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="absolute inset-0 bg-gradient-to-br from-[#9d1f20]/80 via-[#9d1f20]/40 to-black/30"></div>
+
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-[#9d1f20]/80 to-gray-900/70"></div>
 
     <div class="relative mx-auto w-full max-w-7xl px-6 py-24">
-      <div class="max-w-2xl">
-
-        <h1 class="mb-4 text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
+      <div class="max-w-2xl transform transition duration-500 hover:scale-[1.01]">
+        <h1 class="mb-4 text-4xl font-extrabold leading-tight text-white drop-shadow-md sm:text-5xl lg:text-6xl">
           {{ $settings['hero_title']->value ?? 'Energy-Efficient Technology For The Entire Building' }}
         </h1>
-
-        <p class="mb-8 text-lg text-white/90">
+        <p class="mb-8 text-lg font-medium tracking-wide text-white/90 drop-shadow">
           {{ $settings['hero_subtitle']->value ?? 'WE PROVIDE YOU THE BEST SERVICE' }}
         </p>
 
         <div class="flex flex-wrap gap-4">
           <a href="{{ route('products.index') }}"
-            class="bg-brand shadow-soft hover:bg-brand-hover rounded-lg px-6 py-3 font-semibold text-white transition">
+            class="bg-brand hover:bg-brand-hover shadow-soft rounded-lg px-8 py-3.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
             Explore Products
           </a>
-
           <a href="{{ route('contact') }}"
-            class="hover:border-brand hover:text-brand rounded-lg border border-white/40 px-6 py-3 font-semibold text-white transition">
+            class="rounded-lg border-2 border-white/80 px-8 py-3.5 font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-slate-900">
             Contact Us
           </a>
         </div>
-
       </div>
     </div>
   </section>
 
-
-  {{-- About --}}
+  {{-- About Section --}}
   <section id="about" class="bg-white py-16 lg:py-24">
     <div class="mx-auto max-w-7xl px-6">
-
       <div class="grid items-start gap-12 lg:grid-cols-12">
 
-        {{-- Left Column: About --}}
         <div class="lg:col-span-5">
-
-          <h2 class="text-2xl font-extrabold text-slate-800 sm:text-3xl">
+          <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
             ABOUT SUPRANUSA
           </h2>
-
-          <p class="mb-6 text-slate-500">
+          <p class="mb-6 mt-2 text-lg text-slate-500">
             A little of our story
           </p>
-
-          <div class="border-brand rounded-xl border-l-4 bg-slate-50 px-5 pb-5">
-
+          <div class="border-brand rounded-xl border-l-4 bg-slate-50 p-6 shadow-sm">
             <p class="whitespace-pre-line leading-relaxed text-slate-700">
-              {{ $settings['about_content']->value ?? '' }}
+              {{ $settings['about_content']->value ?? 'We are dedicated to providing the best energy-efficient solutions.' }}
             </p>
-
           </div>
-
         </div>
 
-
-        {{-- Right Column: Statistics + Core Values --}}
         <div class="lg:col-span-7">
-
-          {{-- Statistics --}}
           <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-
-            {{-- Established --}}
-            <div class="shadow-soft rounded-xl border border-slate-200 bg-white p-6 text-center">
-
+            <div
+              class="shadow-soft rounded-xl border border-slate-100 bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
               <div class="text-brand mb-2 text-4xl font-extrabold">
                 {{ $settings['about_year_established']->value ?? '1990' }}
               </div>
-
-              <div class="text-sm text-slate-500">
-                Established
-              </div>
-
+              <div class="text-sm font-medium uppercase tracking-wider text-slate-500">Established</div>
             </div>
 
-
-            {{-- Expansion --}}
-            <div class="shadow-soft rounded-xl border border-slate-200 bg-white p-6 text-center">
-
+            <div
+              class="shadow-soft rounded-xl border border-slate-100 bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
               <div class="text-brand mb-2 text-4xl font-extrabold">
                 {{ $settings['about_expansion_year']->value ?? '1992' }}
               </div>
-
-              <div class="text-sm text-slate-500">
-                Expansion Year
-              </div>
-
+              <div class="text-sm font-medium uppercase tracking-wider text-slate-500">Expansion Year</div>
             </div>
 
-
-            {{-- Distributor --}}
-            <div class="shadow-soft rounded-xl border border-slate-200 bg-white p-6 text-center">
-
-              <div class="text-brand mb-2 text-4xl font-extrabold">
-                Trusted
-              </div>
-
-              <div class="text-sm text-slate-500">
-                Distributor
-              </div>
-
+            <div
+              class="shadow-soft rounded-xl border border-slate-100 bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+              <div class="text-brand mb-2 text-4xl font-extrabold">Trusted</div>
+              <div class="text-sm font-medium uppercase tracking-wider text-slate-500">Distributor</div>
             </div>
-
           </div>
 
+          <div class="mt-8 rounded-2xl border border-slate-100 bg-slate-50 p-8 shadow-sm">
+            <h3 class="mb-6 text-xl font-bold text-slate-900">Our Core Values</h3>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
 
-          {{-- Core Values --}}
-          <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-
-            <h3 class="mb-4 text-lg font-semibold text-slate-800">
-              Our Core Values
-            </h3>
-
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-
-              <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                <svg class="text-brand h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
+              <div
+                class="hover:border-brand/30 group flex flex-col items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-md">
+                <div class="group-hover:bg-brand/10 rounded-lg bg-slate-50 p-2 transition-colors">
+                  <svg class="text-brand h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </div>
                 <div>
-                  <div class="font-semibold">Professionalism</div>
-                  <div class="text-sm text-slate-600">Reliable, detail-oriented, accountable.</div>
+                  <div class="font-bold text-slate-800">Professionalism</div>
+                  <div class="mt-1 text-sm leading-relaxed text-slate-600">Reliable, detail-oriented, accountable.</div>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                <svg class="text-brand h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 21l-1-1C5 15 2 12 2 8a6 6 0 0112 0c0 4-3 7-9 12l-1 1" />
-                </svg>
+              <div
+                class="hover:border-brand/30 group flex flex-col items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-md">
+                <div class="group-hover:bg-brand/10 rounded-lg bg-slate-50 p-2 transition-colors">
+                  <svg class="text-brand h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 21l-1-1C5 15 2 12 2 8a6 6 0 0112 0c0 4-3 7-9 12l-1 1" />
+                  </svg>
+                </div>
                 <div>
-                  <div class="font-semibold">Passion</div>
-                  <div class="text-sm text-slate-600">Driven to serve and improve.</div>
+                  <div class="font-bold text-slate-800">Passion</div>
+                  <div class="mt-1 text-sm leading-relaxed text-slate-600">Driven to serve and improve.</div>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4">
-                <svg class="text-brand h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" />
-                </svg>
+              <div
+                class="hover:border-brand/30 group flex flex-col items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:shadow-md">
+                <div class="group-hover:bg-brand/10 rounded-lg bg-slate-50 p-2 transition-colors">
+                  <svg class="text-brand h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" />
+                  </svg>
+                </div>
                 <div>
-                  <div class="font-semibold">Excellence</div>
-                  <div class="text-sm text-slate-600">High standards in every delivery.</div>
+                  <div class="font-bold text-slate-800">Excellence</div>
+                  <div class="mt-1 text-sm leading-relaxed text-slate-600">High standards in every delivery.</div>
                 </div>
               </div>
 
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   </section>
 
-
-  {{-- Our Brands --}}
+  {{-- Brands Carousel --}}
   @if ($brands->count())
-
-    <section id="products" class="bg-slate-50 py-16 lg:py-24">
+    <section id="products" class="border-y border-slate-200 bg-slate-50 py-16 lg:py-24">
       <div class="mx-auto max-w-7xl px-6">
 
         <div class="mb-12 text-center">
-
-          <h2 class="text-brand text-2xl font-extrabold sm:text-3xl">
-            OUR BRANDS
-          </h2>
-
-          <p class="mt-2 text-slate-500">
-            Trusted partners we represent
-          </p>
-
+          <h2 class="text-brand text-3xl font-extrabold tracking-tight sm:text-4xl">OUR BRANDS</h2>
+          <p class="mt-3 text-lg text-slate-500">Trusted partners we represent</p>
         </div>
 
-
-        <div class="relative">
-
-          <div id="brandRail" class="ml-4 flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth p-4"
-            style="scrollbar-width: none;">
-
+        <div class="group relative">
+          <div id="brandRail" class="mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-4"
+            style="scrollbar-width: none; -ms-overflow-style: none;">
             @foreach ($brands as $brand)
               <div
-                class="hover:ring-brand group h-56 w-56 shrink-0 cursor-pointer snap-start overflow-hidden rounded-2xl ring-2 ring-slate-200 transition-all duration-300 sm:w-64"
+                class="hover:ring-brand group relative h-56 w-56 shrink-0 cursor-pointer snap-start overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:shadow-xl hover:ring-2 sm:w-64"
                 data-brand-id="{{ $brand->id }}">
-
                 @if ($brand->image)
-                  <div class="relative h-full w-full bg-white p-4">
-
-                    <img src="{{ $brand->image }}" alt="{{ $brand->name }}" class="h-full w-full object-contain">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-                    <div class="absolute bottom-4 left-4 right-4">
-
-                      <h3 class="text-lg font-bold text-white">
-                        {{ $brand->name }}
-                      </h3>
-
+                  <div class="relative h-full w-full p-6">
+                    <img src="{{ $brand->image }}" alt="{{ $brand->name }}"
+                      class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110">
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     </div>
-
+                    <div
+                      class="absolute bottom-0 left-0 right-0 translate-y-4 p-4 text-center opacity-0 transition-transform duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      <h3 class="text-lg font-bold text-white">{{ $brand->name }}</h3>
+                    </div>
                   </div>
                 @else
-                  <div class="flex h-full w-full items-center justify-center bg-slate-200 text-slate-400">
-                    <span>{{ $brand->name }}</span>
+                  <div
+                    class="flex h-full w-full items-center justify-center bg-slate-100 text-slate-400 transition-colors group-hover:bg-slate-200">
+                    <span class="font-medium">{{ $brand->name }}</span>
                   </div>
                 @endif
-
               </div>
             @endforeach
-
           </div>
 
           <button id="brandPrev" type="button" aria-label="Previous"
-            class="hover:border-brand absolute left-0 top-1/2 inline-flex h-10 w-10 -translate-x-2 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow transition hover:shadow-md disabled:opacity-40">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            class="hover:border-brand hover:text-brand absolute left-0 top-1/2 z-10 inline-flex h-12 w-12 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-500 shadow-md backdrop-blur transition-all hover:scale-110 disabled:pointer-events-none disabled:opacity-0">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           <button id="brandNext" type="button" aria-label="Next"
-            class="hover:border-brand absolute right-0 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 translate-x-2 items-center justify-center rounded-full border border-slate-200 bg-white shadow transition hover:shadow-md disabled:opacity-40">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            class="hover:border-brand hover:text-brand absolute right-0 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-500 shadow-md backdrop-blur transition-all hover:scale-110 disabled:pointer-events-none disabled:opacity-0">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
             </svg>
           </button>
-
         </div>
-
       </div>
     </section>
-
   @endif
-
 
   {{-- Featured Projects --}}
   @if ($featuredProjects->count())
-
     <section id="projects" class="bg-white py-16 lg:py-24">
-
       <div class="mx-auto max-w-7xl px-6">
 
         <div class="mb-12 text-center">
-
-          <h2 class="text-2xl font-extrabold text-slate-800 sm:text-3xl">
-            PROJECT REFERENCES
-          </h2>
-
-          <p class="mt-2 text-slate-500">
-            Browse by brand
-          </p>
-
+          <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">PROJECT REFERENCES</h2>
+          <p class="mt-3 text-lg text-slate-500">Browse our successful implementations</p>
         </div>
-
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           @foreach ($featuredProjects as $project)
             @php
               $tags = $project->tags;
-
               if (is_string($tags)) {
                   $tags = json_decode($tags, true);
               }
-
               $tags = is_array($tags) ? $tags : [];
             @endphp
 
             <article
-              class="shadow-soft group flex h-full min-h-[50px] flex-col rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
-
-              {{-- Header --}}
+              class="shadow-soft hover:border-brand/40 group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
               <div class="flex items-start justify-between gap-4">
-
                 <div class="min-w-0">
-
-                  {{-- Brand --}}
                   @if ($project->brand)
-                    <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <p class="text-brand mb-1.5 text-xs font-bold uppercase tracking-widest">
                       {{ $project->brand }}
                     </p>
                   @endif
-
-                  {{-- Title --}}
-                  <h3 class="line-clamp-2 min-h-[3.5rem] text-lg font-semibold leading-7 text-slate-900">
+                  <h3
+                    class="group-hover:text-brand line-clamp-2 min-h-[3.5rem] text-lg font-bold leading-tight text-slate-900 transition-colors">
                     {{ $project->title }}
                   </h3>
-
-                  {{-- Company --}}
-                  <div class="mt-1 min-h-[1.25rem]">
+                  <div class="mt-2 min-h-[1.25rem]">
                     @if ($project->company)
-                      <p class="truncate text-sm text-slate-500">
+                      <p class="truncate text-sm font-medium text-slate-500">
                         {{ $project->company }}
                       </p>
                     @endif
                   </div>
-
                 </div>
 
-                {{-- Year --}}
-                <div class="shrink-0">
-                  @if ($project->year)
+                @if ($project->year)
+                  <div class="shrink-0">
                     <span
-                      class="inline-flex rounded-full bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-500 ring-1 ring-inset ring-slate-200">
+                      class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 ring-1 ring-inset ring-slate-200">
                       {{ $project->year }}
                     </span>
-                  @endif
-                </div>
-
+                  </div>
+                @endif
               </div>
 
-              {{-- <div class="mt-4 min-h-[4.5rem]">
-                @if ($project->description)
-                  <p class="line-clamp-3 text-sm leading-6 text-slate-500">
-                    {{ $project->description }}
-                  </p>
-                @endif
-              </div> --}}
-
-
-              {{-- Tags --}}
-              <div class="mt-auto pt-5">
-
+              <div class="mt-auto pt-6">
                 @if (count($tags))
-                  <div class="flex flex-wrap content-start gap-1.5">
-
-                    @foreach (array_slice($tags, 0, 4) as $tag)
+                  <div class="flex flex-wrap content-start gap-2">
+                    @foreach (array_slice($tags, 0, 3) as $tag)
                       <span
-                        class="rounded-md bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-500 ring-1 ring-inset ring-slate-200">
+                        class="rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-slate-500 ring-1 ring-inset ring-slate-200">
                         {{ $tag }}
                       </span>
                     @endforeach
-
-                    @if (count($tags) > 4)
-                      <span class="rounded-md bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-400">
-                        +{{ count($tags) - 4 }}
+                    @if (count($tags) > 3)
+                      <span
+                        class="rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-400 ring-1 ring-inset ring-slate-200">
+                        +{{ count($tags) - 3 }}
                       </span>
                     @endif
-
                   </div>
                 @else
                   <div class="min-h-[1.75rem]"></div>
                 @endif
-
               </div>
-
             </article>
           @endforeach
         </div>
 
-
-        <div class="mt-8 text-center">
-
+        <div class="mt-12 text-center">
           <a href="{{ route('projects.index') }}"
-            class="hover:border-brand hover:text-brand inline-flex items-center gap-2 rounded-lg border border-slate-300 px-6 py-3 font-medium text-slate-700 transition">
+            class="hover:border-brand hover:text-brand hover:bg-brand/5 inline-flex items-center gap-2 rounded-lg border-2 border-slate-200 px-8 py-3.5 font-bold text-slate-700 transition-all duration-300">
             View All Projects
-
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-
           </a>
-
         </div>
-
       </div>
-
     </section>
-
   @endif
 
-
-  {{-- Product Catalogue --}}
-  @if ($productsByBrand->count())
-
-    <section class="bg-white py-16 lg:py-24">
-
-      <div class="mx-auto max-w-7xl px-6">
-
-        <div class="mb-12 text-center">
-
-          <h2 class="text-2xl font-extrabold text-slate-800 sm:text-3xl">
-            PRODUCT CATALOGUE
-          </h2>
-
-          <p class="mt-2 text-slate-500">
-            Browse our products by brand
-          </p>
-
-        </div>
-
-        <div id="catalogTabs" class="mb-8 flex flex-wrap gap-2 border-b border-slate-200">
-
-          @foreach ($brands as $index => $brand)
-            <button data-catalog-tab="catalog-{{ $brand->id }}"
-              class="catalog-tab-btn text-brand @if ($index === 0) border-brand bg-slate-50 @endif rounded-t-lg border border-b-0 border-slate-200 bg-white px-4 py-2 font-semibold transition">
-              {{ $brand->name }}
-            </button>
-          @endforeach
-
-        </div>
-
-        <div class="rounded-b-xl border border-t-0 border-slate-200 bg-slate-50 p-6">
-
-          @foreach ($brands as $index => $brand)
-            <div id="catalog-{{ $brand->id }}"
-              class="catalog-pane @if ($index !== 0) hidden @endif">
-
-              @if (isset($productsByBrand[$brand->id]) && $productsByBrand[$brand->id]->count())
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                  @foreach ($productsByBrand[$brand->id] as $product)
-                    <a href="{{ route('products.show', $product->slug) }}"
-                      class="block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
-
-                      @if ($product->image)
-                        <div class="aspect-video bg-slate-100">
-                          <img src="{{ $product->image }}" alt="{{ $product->name }}"
-                            class="h-full w-full object-cover">
-                        </div>
-                      @elseif ($product->file)
-                        <div class="relative aspect-video overflow-hidden bg-slate-100"
-                          data-pdf-preview="{{ $product->file }}">
-                          <canvas class="pdf-thumbnail h-full w-full object-cover"></canvas>
-                          <div class="pdf-loading absolute inset-0 flex items-center justify-center bg-slate-100">
-                            <div class="text-center">
-                              <div
-                                class="mx-auto mb-1 h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-slate-700">
-                              </div>
-                              <span class="text-[10px] text-slate-500">Loading...</span>
-                            </div>
-                          </div>
-                        </div>
-                      @else
-                        <div class="flex aspect-video items-center justify-center bg-slate-100 text-slate-400">
-                          No Image
-                        </div>
-                      @endif
-
-                      <div class="p-4">
-                        <h3 class="mb-2 font-bold text-slate-800">{{ $product->name }}</h3>
-                        @if ($product->short_description)
-                          <p class="line-clamp-2 text-sm text-slate-600">{{ $product->short_description }}</p>
-                        @endif
-                      </div>
-
-                    </a>
-                  @endforeach
-
-                </div>
-              @else
-                <div class="py-12 text-center text-slate-500">
-                  <p>No products available for this brand yet.</p>
-                </div>
-              @endif
-
-            </div>
-          @endforeach
-
-        </div>
-
-      </div>
-
-    </section>
-
-  @endif
-
+  <x-product-catalogue :brands="$brands" :products-by-brand="$productsByBrand" />
 
   <x-contact-section :settings="$settings" />
 
+  {{-- Scroll-To-Top Button --}}
+  <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+    class="bg-brand hover:bg-brand-hover pointer-events-none fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full text-white opacity-0 shadow-lg transition-all duration-300 hover:scale-110"
+    aria-label="Scroll to top">
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
 
   <script>
-    window.addEventListener('scroll', function() {
-      var btn = document.getElementById('toTop');
+    document.addEventListener('DOMContentLoaded', function() {
 
-      if (window.scrollY > 300) {
-        btn.classList.remove('opacity-0', 'pointer-events-none');
-      } else {
-        btn.classList.add('opacity-0', 'pointer-events-none');
+      const toTopBtn = document.getElementById('toTop');
+      if (toTopBtn) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 300) {
+            toTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            toTopBtn.classList.add('opacity-100', 'cursor-pointer');
+          } else {
+            toTopBtn.classList.remove('opacity-100', 'cursor-pointer');
+            toTopBtn.classList.add('opacity-0', 'pointer-events-none');
+          }
+        }, {
+          passive: true
+        });
       }
-    });
 
-    (function() {
       const rail = document.getElementById('brandRail');
       const prevBtn = document.getElementById('brandPrev');
       const nextBtn = document.getElementById('brandNext');
 
       if (rail && prevBtn && nextBtn) {
+
         function scrollByCard(dir) {
           const card = rail.querySelector('[data-brand-id]');
-          const step = card ? card.getBoundingClientRect().width * 1.25 : 300;
+          const step = card ? card.getBoundingClientRect().width + 24 : 300;
+
           rail.scrollBy({
             left: dir * step,
             behavior: 'smooth'
           });
-          updateArrowState();
         }
 
         function updateArrowState() {
-          const maxScroll = rail.scrollWidth - rail.clientWidth - 2;
-          prevBtn.disabled = rail.scrollLeft <= 2;
+          const maxScroll = rail.scrollWidth - rail.clientWidth - 5;
+          prevBtn.disabled = rail.scrollLeft <= 5;
           nextBtn.disabled = rail.scrollLeft >= maxScroll;
         }
 
@@ -519,27 +335,13 @@
         rail.addEventListener('scroll', updateArrowState, {
           passive: true
         });
+
         updateArrowState();
-      }
-
-      document.querySelectorAll('.catalog-tab-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          const targetId = this.getAttribute('data-catalog-tab');
-
-          document.querySelectorAll('.catalog-tab-btn').forEach(function(b) {
-            b.classList.remove('border-brand', 'bg-slate-50');
-            b.classList.add('border-slate-200', 'bg-white');
-          });
-          this.classList.add('border-brand', 'bg-slate-50');
-          this.classList.remove('border-slate-200', 'bg-white');
-
-          document.querySelectorAll('.catalog-pane').forEach(function(pane) {
-            pane.classList.add('hidden');
-          });
-          document.getElementById(targetId).classList.remove('hidden');
+        window.addEventListener('resize', updateArrowState, {
+          passive: true
         });
-      });
-    })();
+      }
+    });
   </script>
 
 @endsection
