@@ -10,7 +10,7 @@
       <h2 class="mb-4 text-lg font-semibold">General</h2>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label class="mb-1 block text-sm font-medium">Company Name</label>
+          <label class="block text-sm font-medium">Company Name</label>
           <input type="text" name="company_name" value="{{ $settings['company_name']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
         </div>
@@ -79,31 +79,32 @@
       <h2 class="mb-4 text-lg font-semibold">Contact</h2>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label class="mb-1 block text-sm font-medium">Address</label>
+          <label class="block text-sm font-medium">Address</label>
           <textarea name="contact_address" rows="3"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">{{ $settings['contact_address']->value ?? '' }}</textarea>
         </div>
         <div>
-          <label class="mb-1 block text-sm font-medium">Phone</label>
+          <label class="block text-sm font-medium">Phone</label>
           <input type="text" name="contact_phone" value="{{ $settings['contact_phone']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
 
-          <label class="mb-1 block text-sm font-medium">Whatsapp</label>
-          <input type="text" name="contact_whatsapp" value="{{ $settings['contact_whatsapp']->value ?? '' }}">
+          <label class="block text-sm font-medium">Whatsapp</label>
+          <input type="text" name="contact_whatsapp" value="{{ $settings['contact_whatsapp']->value ?? '' }}"
+            class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
 
-          <label class="mb-1 mt-4 block text-sm font-medium">Fax</label>
+          <label class="mt-4 block text-sm font-medium">Fax</label>
           <input type="text" name="contact_fax" value="{{ $settings['contact_fax']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
         </div>
       </div>
       <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label class="mb-1 block text-sm font-medium">Email</label>
+          <label class="block text-sm font-medium">Email</label>
           <input type="email" name="contact_email" value="{{ $settings['contact_email']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
         </div>
         <div>
-          <label class="mb-1 block text-sm font-medium">Website</label>
+          <label class="block text-sm font-medium">Website</label>
           <input type="url" name="contact_website" value="{{ $settings['contact_website']->value ?? '' }}"
             class="focus:border-brand w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none">
         </div>

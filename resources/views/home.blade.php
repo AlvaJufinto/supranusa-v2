@@ -2,6 +2,47 @@
 
 @section('title', 'Home')
 
+@section('meta')
+  <meta name="description" content="{{ $settings['meta_description']->value ?? 'Selamat datang di website resmi kami.' }}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="{{ url()->current() }}">
+
+  {{-- Open Graph untuk Home --}}
+  <meta property="og:title" content="{{ $settings['company_name']->value ?? 'Supranusa' }}">
+  <meta property="og:description"
+    content="{{ $settings['meta_description']->value ?? 'Solusi terbaik untuk kebutuhan Anda.' }}">
+  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:type" content="website">
+  {{-- <meta property="og:image" content="{{ asset('images/og-default.jpg') }}"> --}}
+
+  {{-- JSON-LD Structured Data: Organization & WebSite --}}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ $settings['company_name']->value ?? 'Supranusa' }}",
+      "url": "{{ url('/') }}",
+      "logo": "{{ asset('images/logo.png') }}",
+      "description": "{{ $settings['meta_description']->value ?? '' }}"
+    }
+    </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ $settings['company_name']->value ?? 'Supranusa' }}",
+      "url": "{{ url('/') }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ route('products.index') }}?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+@endsection
+
+
 @section('content')
 
   {{-- Hero Section --}}

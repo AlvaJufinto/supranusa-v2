@@ -4,9 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('title', 'Supranusa')</title>
+
+  @yield('meta')
+
+  <title>
+    @hasSection('title')
+      @yield('title') | {{ $settings['company_name']->value ?? 'Supranusa' }}
+    @else
+      {{ $settings['company_name']->value ?? 'Supranusa' }} - {{ $settings['tagline']->value ?? 'Situs Resmi' }}
+    @endif
+  </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   <link rel="stylesheet" href="/css/markdown.css">
   <script>
     tailwind.config = {
@@ -140,9 +150,6 @@
                 <p class="text-xs text-slate-400">Hover a brand to see products</p>
               </div>
             </div>
-            <!-- DEBUG navBrands: @foreach ($navBrands as $b)
-{{ $b->name }}({{ $b->products->count() }})
-@endforeach - total {{ $navBrands->count() }} -->
             @foreach ($navBrands as $brand)
               <div id="brand-products-{{ $brand->id }}" class="hidden">
                 <p class="text-brand mb-3 text-xs font-semibold uppercase tracking-wide">{{ $brand->name }} Products
@@ -403,7 +410,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" type="module"></script>
 
   <script type="module">
-    import { getDocument, GlobalWorkerOptions } from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs';
+    import {
+      getDocument,
+      GlobalWorkerOptions
+    } from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs';
     GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
 
     async function renderPdfThumbnail(container) {
@@ -412,12 +422,19 @@
       const loading = container.querySelector('.pdf-loading');
 
       try {
-        const pdf = await getDocument({ url, withCredentials: false }).promise;
+        const pdf = await getDocument({
+          url,
+          withCredentials: false
+        }).promise;
         const page = await pdf.getPage(1);
-        const vp = page.getViewport({ scale: 1 });
+        const vp = page.getViewport({
+          scale: 1
+        });
         const scaleX = container.clientWidth / vp.width;
         const scaleY = container.clientHeight / vp.height;
-        const viewport = page.getViewport({ scale: Math.max(scaleX, scaleY) });
+        const viewport = page.getViewport({
+          scale: Math.max(scaleX, scaleY)
+        });
         const dpr = window.devicePixelRatio || 1;
         canvas.width = Math.floor(viewport.width * dpr);
         canvas.height = Math.floor(viewport.height * dpr);
@@ -425,10 +442,14 @@
         canvas.style.height = `${viewport.height}px`;
         const ctx = canvas.getContext('2d');
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        await page.render({ canvasContext: ctx, viewport }).promise;
+        await page.render({
+          canvasContext: ctx,
+          viewport
+        }).promise;
         loading.style.display = 'none';
       } catch (e) {
-        loading.innerHTML = `<div class="text-center"><div class="mb-1 text-3xl">📄</div><span class="text-[10px] text-slate-500">PDF Preview</span></div>`;
+        loading.innerHTML =
+          `<div class="text-center"><div class="mb-1 text-3xl">📄</div><span class="text-[10px] text-slate-500">PDF Preview</span></div>`;
       }
     }
 

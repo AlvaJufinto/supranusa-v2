@@ -56,4 +56,26 @@ class ProductController extends Controller
 
 		return view('products.show', compact('product'));
 	}
+
+	public function downloadPDF(int $id)
+	{
+		$product = Product::findOrFail($id);
+
+		$fileUrl = $product->file; // Ini URL eksternal kamu (misal: https://s3.aws.com/.../file.pdf)
+
+		// 1. Ambil nama file dari URL asli, atau buat nama default jika gagal
+		$fileName = basename(parse_url($fileUrl, PHP_URL_PATH));
+		if (!$fileName) {
+			$fileName = 'Produk-' . $product->id . '.pdf';
+		}
+
+		// 2. Stream file ke browser (Jembatan dari eksternal -> Laravel -> User)
+		return response()->streamDownload(function () use ($fileUrl) {
+			// readfile() membaca URL dan langsung mengirimnya ke browser 
+			// tanpa memuat seluruh file ke RAM server (sangat aman untuk file besar)
+			readfile($fileUrl);
+		}, $fileName, [
+			'Content-Type' => 'application/pdf',
+		]);
+	}
 }
