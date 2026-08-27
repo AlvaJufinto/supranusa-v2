@@ -120,9 +120,7 @@
           </p>
 
           @php
-            $projectTags = is_string($project->tags) ? json_decode($project->tags, true) : $project->tags;
-
-            $projectTags = is_array($projectTags) ? $projectTags : [];
+            $projectTags = is_array($project->tags) ? $project->tags : [];
           @endphp
 
           <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">

@@ -25,13 +25,13 @@
                 <td class="px-6 py-4 text-slate-500">{{ ucfirst($project->brand) }}</td>
                 <td class="px-6 py-4 text-slate-500">{{ $project->company }}</td>
                 <td class="px-6 py-4">
-                    <span class="px-2 py-1 text-xs rounded {{ $project->status === 'published' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600' }}">{{ ucfirst($project->status) }}</span>
+                    <x-status-badge :status="$project->status" />
                 </td>
                 <td class="px-6 py-4">
                     <a href="{{ route('admin.projects.edit', $project) }}" class="text-brand hover:underline mr-3">Edit</a>
                     <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" class="inline">
                         @csrf @method('DELETE')
-                        <button type="submit" onclick="return confirm('Delete this project?')" class="text-red-500 hover:underline">Delete</button>
+                        <button type="submit" data-confirm="Delete this project?" class="text-red-500 hover:underline">Delete</button>
                     </form>
                 </td>
             </tr>

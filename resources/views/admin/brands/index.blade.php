@@ -27,7 +27,7 @@
                     <a href="{{ route('admin.brands.edit', $brand) }}" class="text-brand hover:underline mr-3">Edit</a>
                     <form action="{{ route('admin.brands.destroy', $brand) }}" method="POST" class="inline">
                         @csrf @method('DELETE')
-                        <button type="submit" onclick="return confirm('Delete this brand?')" class="text-red-500 hover:underline">Delete</button>
+                        <button type="submit" data-confirm="Delete this brand?" class="text-red-500 hover:underline">Delete</button>
                     </form>
                 </td>
             </tr>

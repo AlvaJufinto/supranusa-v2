@@ -113,70 +113,15 @@
   </section>
 
   {{-- PDF.js --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script type="module">
+    import {
+      renderAllPdfThumbnails
+    } from '/js/utils/pdf.js';
+    renderAllPdfThumbnails();
+  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-
-      if (typeof pdfjsLib === 'undefined') {
-        console.error('PDF.js failed to load.');
-        return;
-      }
-
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-      async function renderPdfThumbnail(container) {
-        if (container.dataset.pdfRendered === 'true') return;
-        container.dataset.pdfRendered = 'true';
-
-        const url = container.getAttribute('data-pdf-preview');
-        const canvas = container.querySelector('.pdf-thumbnail');
-        const loading = container.querySelector('.pdf-loading');
-
-        if (!url || !canvas) return;
-
-        try {
-          const loadingTask = pdfjsLib.getDocument({
-            url: url,
-            withCredentials: false
-          });
-          const pdf = await loadingTask.promise;
-          const page = await pdf.getPage(1);
-
-          const baseScale = 1.5;
-          const viewport = page.getViewport({
-            scale: baseScale
-          });
-          const devicePixelRatio = window.devicePixelRatio || 1;
-
-          canvas.width = Math.floor(viewport.width * devicePixelRatio);
-          canvas.height = Math.floor(viewport.height * devicePixelRatio);
-
-          const context = canvas.getContext('2d');
-
-          await page.render({
-            canvasContext: context,
-            viewport: viewport,
-            transform: [devicePixelRatio, 0, 0, devicePixelRatio, 0, 0]
-          }).promise;
-
-          if (loading) loading.remove();
-
-        } catch (error) {
-          console.error('Failed to render PDF:', url, error);
-          if (loading) {
-            loading.innerHTML = `<span class="text-xs text-red-500">Error previewing</span>`;
-          }
-        }
-      }
-
-      // Render ALL PDFs instantly on page load (they will now work because display: none is gone!)
-      const allPdfContainers = document.querySelectorAll('[data-pdf-preview]');
-      allPdfContainers.forEach(container => {
-        renderPdfThumbnail(container);
-      });
-
       // Tab Switching Logic
       const catalogTabs = document.querySelectorAll('.catalog-tab-btn');
       const catalogPanes = document.querySelectorAll('.catalog-pane');

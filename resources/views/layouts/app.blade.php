@@ -18,21 +18,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <link rel="stylesheet" href="/css/markdown.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: '#9d1f20',
-            'brand-hover': '#7a1a1b',
-          },
-          boxShadow: {
-            soft: '0 8px 24px rgba(0,0,0,0.07)',
-          }
-        }
-      }
-    }
-  </script>
+  <script src="/js/config/tailwind-brand.js"></script>
   <style>
     html {
       scroll-behavior: smooth;
@@ -146,7 +132,7 @@
                   </a>
                 @endforeach
               </div>
-              <div id="productsPanel" class="flex-1 overflow-y-auto px-4 py-3" style="max-height: 320px;">
+              <div id="productsPanel" class="max-h-[320px] flex-1 overflow-y-auto px-4 py-3">
                 <p class="text-xs text-slate-400">Hover a brand to see products</p>
               </div>
             </div>
@@ -407,91 +393,14 @@
     </script>
   @endif
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" type="module"></script>
-
   <script type="module">
     import {
-      getDocument,
-      GlobalWorkerOptions
-    } from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs';
-    GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
-
-    async function renderPdfThumbnail(container) {
-      const url = container.dataset.pdfPreview;
-      const canvas = container.querySelector('.pdf-thumbnail');
-      const loading = container.querySelector('.pdf-loading');
-
-      try {
-        const pdf = await getDocument({
-          url,
-          withCredentials: false
-        }).promise;
-        const page = await pdf.getPage(1);
-        const vp = page.getViewport({
-          scale: 1
-        });
-        const scaleX = container.clientWidth / vp.width;
-        const scaleY = container.clientHeight / vp.height;
-        const viewport = page.getViewport({
-          scale: Math.max(scaleX, scaleY)
-        });
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = Math.floor(viewport.width * dpr);
-        canvas.height = Math.floor(viewport.height * dpr);
-        canvas.style.width = `${viewport.width}px`;
-        canvas.style.height = `${viewport.height}px`;
-        const ctx = canvas.getContext('2d');
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        await page.render({
-          canvasContext: ctx,
-          viewport
-        }).promise;
-        loading.style.display = 'none';
-      } catch (e) {
-        loading.innerHTML =
-          `<div class="text-center"><div class="mb-1 text-3xl">📄</div><span class="text-[10px] text-slate-500">PDF Preview</span></div>`;
-      }
-    }
-
-    function renderAllPdfThumbnails() {
-      document.querySelectorAll('[data-pdf-preview]').forEach(renderPdfThumbnail);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', renderAllPdfThumbnails);
-    } else {
-      renderAllPdfThumbnails();
-    }
+      renderAllPdfThumbnails
+    } from '/js/utils/pdf.js';
+    renderAllPdfThumbnails();
   </script>
 
-  <script>
-    document.getElementById('menuBtn').addEventListener('click', function() {
-      var nav = document.getElementById('mobileNav');
-      nav.classList.toggle('hidden');
-    });
-
-    var closeTimeout;
-
-    function showBrandProducts(brandId) {
-      clearTimeout(closeTimeout);
-      var panel = document.getElementById('productsPanel');
-      var content = document.getElementById('brand-products-' + brandId);
-      panel.innerHTML = content ? content.innerHTML : '';
-    }
-
-    function keepDropdownOpen() {
-      clearTimeout(closeTimeout);
-    }
-
-    function scheduleDropdownClose() {
-      closeTimeout = setTimeout(function() {
-        var panel = document.getElementById('productsPanel');
-        if (panel) {
-          panel.innerHTML = '<p class="text-xs text-slate-400">Hover a brand to see products</p>';
-        }
-      }, 150);
-    }
-  </script>
+  <script src="/js/app-navigation.js"></script>
 </body>
 
 </html>

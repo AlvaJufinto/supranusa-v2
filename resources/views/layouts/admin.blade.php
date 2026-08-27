@@ -17,19 +17,7 @@
 
   {{-- Tailwind --}}
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: '#9d1f20',
-            'brand-hover': '#7a1a1b',
-          }
-        }
-      }
-    }
-  </script>
+  <script src="/js/config/tailwind-brand.js"></script>
 
   <style>
     /* =========================================================
@@ -422,137 +410,7 @@
      * Quill
      * ========================================================= --}}
   <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-      /*
-       * =====================================================
-       * Mobile Sidebar
-       * =====================================================
-       */
-
-      const sidebar = document.getElementById('admin-sidebar');
-      const overlay = document.getElementById('sidebar-overlay');
-      const openButton = document.getElementById('open-sidebar');
-      const closeButton = document.getElementById('close-sidebar');
-
-      const openSidebar = () => {
-        sidebar?.classList.add('is-open');
-        overlay?.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden');
-      };
-
-      const closeSidebar = () => {
-        sidebar?.classList.remove('is-open');
-        overlay?.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
-      };
-
-      openButton?.addEventListener('click', openSidebar);
-      closeButton?.addEventListener('click', closeSidebar);
-      overlay?.addEventListener('click', closeSidebar);
-
-
-      /*
-       * =====================================================
-       * Quill Rich Text Editor
-       * =====================================================
-       */
-
-      document.querySelectorAll('textarea.rich-editor').forEach((textarea) => {
-
-        // Avoid initializing the same textarea twice.
-        if (textarea.dataset.quillInitialized === 'true') {
-          return;
-        }
-
-        textarea.dataset.quillInitialized = 'true';
-
-        const editorContainer = document.createElement('div');
-
-        editorContainer.className =
-          'quill-editor-wrapper rounded-b-lg';
-
-        textarea.parentNode.insertBefore(
-          editorContainer,
-          textarea
-        );
-
-        textarea.style.display = 'none';
-
-        const quill = new Quill(editorContainer, {
-          theme: 'snow',
-
-          placeholder: textarea.getAttribute('placeholder') || '',
-
-          modules: {
-            toolbar: [
-              [{
-                header: [1, 2, 3, false]
-              }],
-
-              [
-                'bold',
-                'italic',
-                'underline',
-                'strike'
-              ],
-
-              [{
-                  list: 'ordered'
-                },
-                {
-                  list: 'bullet'
-                }
-              ],
-
-              [
-                'blockquote',
-                'link'
-              ],
-
-              [
-                'clean'
-              ]
-            ]
-          }
-        });
-
-
-        /*
-         * Load existing HTML.
-         */
-        const initialContent = textarea.value?.trim();
-
-        if (initialContent) {
-          quill.root.innerHTML = initialContent;
-        }
-
-
-        /*
-         * Keep textarea synchronized with Quill.
-         */
-        const syncContent = () => {
-          textarea.value = quill.root.innerHTML;
-        };
-
-        quill.on('text-change', syncContent);
-
-
-        /*
-         * Final synchronization before submit.
-         */
-        const form = textarea.closest('form');
-
-        if (form) {
-          form.addEventListener('submit', syncContent);
-        }
-
-      });
-
-    });
-  </script>
+  <script src="/js/admin.js"></script>
 
   @stack('scripts')
 

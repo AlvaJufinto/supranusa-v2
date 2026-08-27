@@ -22,14 +22,14 @@
             <tr class="border-t border-slate-200">
                 <td class="px-6 py-4 font-medium">{{ $article->title }}</td>
                 <td class="px-6 py-4">
-                    <span class="px-2 py-1 text-xs rounded {{ $article->status === 'published' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600' }}">{{ ucfirst($article->status) }}</span>
+                    <x-status-badge :status="$article->status" />
                 </td>
                 <td class="px-6 py-4 text-slate-500">{{ $article->published_at?->format('M d, Y') }}</td>
                 <td class="px-6 py-4">
                     <a href="{{ route('admin.articles.edit', $article) }}" class="text-brand hover:underline mr-3">Edit</a>
                     <form action="{{ route('admin.articles.destroy', $article) }}" method="POST" class="inline">
                         @csrf @method('DELETE')
-                        <button type="submit" onclick="return confirm('Delete this article?')" class="text-red-500 hover:underline">Delete</button>
+                        <button type="submit" data-confirm="Delete this article?" class="text-red-500 hover:underline">Delete</button>
                     </form>
                 </td>
             </tr>

@@ -46,8 +46,8 @@
 @section('content')
 
   {{-- Hero Section --}}
-  <section id="home" class="relative flex min-h-[600px] items-center"
-    style="background-image: url('/assets/bg/home.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <section id="home"
+    class="relative flex min-h-[600px] items-center bg-[url('/assets/bg/home.jpg')] bg-cover bg-center bg-no-repeat">
 
     <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-[#9d1f20]/80 to-gray-900/70"></div>
 
@@ -240,67 +240,7 @@
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           @foreach ($featuredProjects as $project)
-            @php
-              $tags = $project->tags;
-              if (is_string($tags)) {
-                  $tags = json_decode($tags, true);
-              }
-              $tags = is_array($tags) ? $tags : [];
-            @endphp
-
-            <article
-              class="shadow-soft hover:border-brand/40 group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
-              <div class="flex items-start justify-between gap-4">
-                <div class="min-w-0">
-                  @if ($project->brand)
-                    <p class="text-brand mb-1.5 text-xs font-bold uppercase tracking-widest">
-                      {{ $project->brand }}
-                    </p>
-                  @endif
-                  <h3
-                    class="group-hover:text-brand line-clamp-2 min-h-[3.5rem] text-lg font-bold leading-tight text-slate-900 transition-colors">
-                    {{ $project->title }}
-                  </h3>
-                  <div class="mt-2 min-h-[1.25rem]">
-                    @if ($project->company)
-                      <p class="truncate text-sm font-medium text-slate-500">
-                        {{ $project->company }}
-                      </p>
-                    @endif
-                  </div>
-                </div>
-
-                @if ($project->year)
-                  <div class="shrink-0">
-                    <span
-                      class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 ring-1 ring-inset ring-slate-200">
-                      {{ $project->year }}
-                    </span>
-                  </div>
-                @endif
-              </div>
-
-              <div class="mt-auto pt-6">
-                @if (count($tags))
-                  <div class="flex flex-wrap content-start gap-2">
-                    @foreach (array_slice($tags, 0, 3) as $tag)
-                      <span
-                        class="rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-slate-500 ring-1 ring-inset ring-slate-200">
-                        {{ $tag }}
-                      </span>
-                    @endforeach
-                    @if (count($tags) > 3)
-                      <span
-                        class="rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-400 ring-1 ring-inset ring-slate-200">
-                        +{{ count($tags) - 3 }}
-                      </span>
-                    @endif
-                  </div>
-                @else
-                  <div class="min-h-[1.75rem]"></div>
-                @endif
-              </div>
-            </article>
+            <x-project-card :project="$project" :tags="is_array($project->tags) ? $project->tags : []" :max-tags="3" />
           @endforeach
         </div>
 
@@ -331,58 +271,6 @@
     </svg>
   </button>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-      const toTopBtn = document.getElementById('toTop');
-      if (toTopBtn) {
-        window.addEventListener('scroll', function() {
-          if (window.scrollY > 300) {
-            toTopBtn.classList.remove('opacity-0', 'pointer-events-none');
-            toTopBtn.classList.add('opacity-100', 'cursor-pointer');
-          } else {
-            toTopBtn.classList.remove('opacity-100', 'cursor-pointer');
-            toTopBtn.classList.add('opacity-0', 'pointer-events-none');
-          }
-        }, {
-          passive: true
-        });
-      }
-
-      const rail = document.getElementById('brandRail');
-      const prevBtn = document.getElementById('brandPrev');
-      const nextBtn = document.getElementById('brandNext');
-
-      if (rail && prevBtn && nextBtn) {
-
-        function scrollByCard(dir) {
-          const card = rail.querySelector('[data-brand-id]');
-          const step = card ? card.getBoundingClientRect().width + 24 : 300;
-
-          rail.scrollBy({
-            left: dir * step,
-            behavior: 'smooth'
-          });
-        }
-
-        function updateArrowState() {
-          const maxScroll = rail.scrollWidth - rail.clientWidth - 5;
-          prevBtn.disabled = rail.scrollLeft <= 5;
-          nextBtn.disabled = rail.scrollLeft >= maxScroll;
-        }
-
-        prevBtn.addEventListener('click', () => scrollByCard(-1));
-        nextBtn.addEventListener('click', () => scrollByCard(1));
-        rail.addEventListener('scroll', updateArrowState, {
-          passive: true
-        });
-
-        updateArrowState();
-        window.addEventListener('resize', updateArrowState, {
-          passive: true
-        });
-      }
-    });
-  </script>
+  <script src="/js/home.js"></script>
 
 @endsection
