@@ -10,18 +10,34 @@ class AssetServer
 {
     public function upload(UploadedFile $file): array
     {
+        $realPath = $file->getRealPath();
+
+        if ($realPath === false || !is_readable($realPath)) {
+            throw new RuntimeException(
+                sprintf('File tidak dapat dibaca: %s (%s)', $file->getClientOriginalName(), $realPath)
+            );
+        }
+
         $endpoint = config('services.asset_server.url') . '/post';
 
         $response = Http::timeout(60)
             ->attach(
                 'file',
-                fopen($file->getRealPath(), 'r'),
+                fopen($realPath, 'r'),
                 $file->getClientOriginalName()
             )
             ->post($endpoint);
 
         if (!$response->successful()) {
-            throw new RuntimeException('Asset server request failed.');
+            $context = [
+                'endpoint' => $endpoint,
+                'status' => $response->status(),
+                'body' => $response->body(),
+                'filename' => $file->getClientOriginalName(),
+            ];
+            throw new RuntimeException(
+                sprintf('Asset server request failed (%d): %s', $response->status(), $response->body())
+            );
         }
 
         $data = $response->json();

@@ -11,7 +11,11 @@ class AdminSeeder extends Seeder
     {
         Admin::firstOrCreate(
             ['email' => 'admin@snj.co.id'],
-            ['name' => 'Admin', 'password' => bcrypt('admin123')]
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('admin123'),
+                'email_verified_at' => null,
+            ]
         );
     }
 }

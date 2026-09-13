@@ -68,8 +68,14 @@ class ArticleSeeder extends Seeder
 		];
 
 		foreach ($articles as $a) {
-			$slug = Str::slug($a['title']);
-			Article::create([
+		    $slug = Str::slug($a['title']);
+
+		    // Skip jika sudah ada (idempotent)
+		    if (Article::where('slug', $slug)->exists()) {
+		        continue;
+		    }
+
+		    Article::create([
 				'title' => $a['title'],
 				'slug' => $slug,
 				'excerpt' => $a['excerpt'],

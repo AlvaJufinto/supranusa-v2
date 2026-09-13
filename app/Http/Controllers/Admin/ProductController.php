@@ -14,10 +14,17 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-	public function index(): View
+	public function index(Request $request): View
 	{
-		$products = Product::with('brand')->ordered()->get();
-		return view('admin.products.index', compact('products'));
+		$brands = Brand::ordered()->get();
+		$query = Product::with('brand')->ordered();
+
+		if ($request->filled('brand_id')) {
+			$query->where('brand_id', $request->brand_id);
+		}
+
+		$products = $query->get();
+		return view('admin.products.index', compact('products', 'brands'));
 	}
 
 	public function create(): View
@@ -58,7 +65,9 @@ class ProductController extends Controller
 		AssetUploadObserver::setPendingUploads($product, $pendingUploads);
 		$product->save();
 
-		return redirect()->route('admin.products.index')->with('success', 'Product created.');
+		return redirect()
+			->route('admin.products.index', ['brand_id' => $product->brand_id])
+			->with('success', 'Product created.');
 	}
 
 	public function show(Product $product): View
@@ -103,7 +112,9 @@ class ProductController extends Controller
 		AssetUploadObserver::setPendingUploads($product, $pendingUploads);
 		$product->update($data);
 
-		return redirect()->route('admin.products.index')->with('success', 'Product updated.');
+		return redirect()
+			->route('admin.products.index', ['brand_id' => $product->brand_id])
+			->with('success', 'Product updated.');
 	}
 
 	public function destroy(Product $product): RedirectResponse

@@ -29,7 +29,7 @@ class SettingsSeeder extends Seeder
 			// Contact
 			['key' => 'contact_address',  'group' => 'contact', 'type' => 'textarea', 'value' => "Kirana Boutique Office, Blok B2/9\nJl. Boulevard Raya No.1, Kelapa Gading\nNorth Jakarta — 14240"],
 			['key' => 'contact_phone',     'group' => 'contact', 'type' => 'text',     'value' => '+62 21 224 50 109'],
-			['key' => 'contact_whatsapp',      'group' => 'contact', 'type' => 'text',     'value' => '+62 21 224 50 120'],
+			['key' => 'contact_whatsapp',      'group' => 'contact', 'type' => 'text',     'value' => '+62 812-8114-5067'],
 			['key' => 'contact_fax',      'group' => 'contact', 'type' => 'text',     'value' => '+62 21 224 50 120'],
 			['key' => 'contact_email',    'group' => 'contact', 'type' => 'text',     'value' => 'mkt@snj.co.id'],
 			['key' => 'contact_website',  'group' => 'contact', 'type' => 'text',     'value' => 'www.snj.co.id'],
