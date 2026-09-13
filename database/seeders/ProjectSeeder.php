@@ -69,6 +69,14 @@ class ProjectSeeder extends Seeder
             if (empty($p['brand']) || !$brands[$p['brand']]) {
                 continue;
             }
+
+            $slug = Str::slug($p['title']);
+
+            // Skip jika sudah ada (idempotent)
+            if (Project::where('slug', $slug)->exists()) {
+                continue;
+            }
+
             Project::create([
                 'brand_id' => $brands[$p['brand']]->id,
                 'title' => $p['title'],

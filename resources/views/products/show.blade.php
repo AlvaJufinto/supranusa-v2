@@ -222,7 +222,7 @@
 
             <div class="mb-8">
               <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-                Product Catalog
+                Datasheet
               </h2>
               <p class="mt-2 text-lg text-slate-500">
                 Technical specifications and detailed documentation.
