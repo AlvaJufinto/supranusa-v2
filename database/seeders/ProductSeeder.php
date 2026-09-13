@@ -124,6 +124,15 @@ class ProductSeeder extends Seeder
                 'image' => 'https://assets.snj.co.id/assets/img/47ff36f93a3a771dc6386a73da9862b6.jpg',
                 'file'  => null,
             ],
+            [
+                'brand' => 'siemens',
+                'bac_category' => null,
+                'name' => 'Chiller Sequencing Siemens',
+                'short_description' => 'Siemens Chiller Sequencing is a control solution that coordinates the operation of multiple chillers based on cooling demand and equipment operating conditions, helping optimize chilled water plant performance and energy efficiency.',
+                'description' => '<p><strong>Siemens Chiller Sequencing</strong> is a control function designed to coordinate the operation of multiple chillers within a chilled water plant. The sequencing strategy determines which chillers should operate and when additional chillers should be enabled based on the cooling demand and operating conditions of the system.</p><p>For plants with multiple chillers, coordinated sequencing helps match available cooling capacity with the actual load while considering the operating characteristics of individual chillers.</p><h3>Key Features</h3><ul><li><strong>Load-Based Sequencing</strong> — Adjusts number and combination of operating chillers according to cooling demand.</li><li><strong>Equipment Prioritization</strong> — Supports operating priorities based on characteristics and efficiency of individual chillers.</li><li><strong>Lead/Lag Operation</strong> — Coordinates sequence in which chillers are started and stopped.</li><li><strong>Run-Time Consideration</strong> — Operating hours considered when determining chiller sequencing and rotation.</li></ul>',
+                'image' => null,
+                'file'  => 'https://assets.snj.co.id/assets/pdf/f1885eecf9164f4a8f96cb79de7cc847.pdf',
+            ],
 
             // ===== BAC (brand_id=2) =====
             [
@@ -328,16 +337,6 @@ class ProductSeeder extends Seeder
                 'image' => 'https://assets.snj.co.id/assets/img/5dcb4db0a122d11afea3aaa1f4a0151e.jpg',
                 'file'  => 'https://assets.snj.co.id/assets/pdf/89c68941deb73e5e5436484401f99733.pdf',
             ],
-            [
-                'brand' => 'armacell',
-                'bac_category' => null,
-                'name' => 'AP/ArmaFlex Insulation Tape',
-                'short_description' => 'Mold-resistant, elastomeric pressure sensitive insulation tape for pipes and fittings.',
-                'description' => '<p>AP/ArmaFlex Insulation Tape is a black, closed-cell, mold-resistant, elastomeric thermal insulation tape for insulating pipes and fittings. Provides a fast, easy method of insulating pipes and fittings.</p><p><strong>Applications:</strong> Thermal, Commercial building, Residential</p>',
-                'image' => 'https://assets.snj.co.id/assets/img/119fc681f9c63fcd496c659dbbef77f6.jpg',
-                'file'  => null,
-            ],
-
             // ===== HIRA (brand_id=5) =====
             [
                 'brand' => 'hira',
@@ -363,8 +362,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Alupet Tape',
                 'short_description' => 'Diamond/Aerofoam aluminum foil tape reinforced with PET film backing.',
                 'description' => '<p>Diamond/Aerofoam Alupet Tape is a special aluminum foil tape reinforced with PET film backing combined with strong solvent acrylic adhesives and easy-release paper.</p><ul><li>Diamond/Aerofoam XLPE insulation closing</li><li>Air-conditioning duct lamination</li><li>Roofing flashing joint sealing</li><li>Refrigeration duct vapor sealing</li></ul><p><strong>Variants:</strong></p><ul><li>Solvent based</li><li>Rubber based</li></ul>',
-                'image' => 'https://assets.snj.co.id/assets/img/51663a4a17c4e740d445d4932f27638b.jpg',
-                'file'  => 'https://assets.snj.co.id/assets/pdf/d937c7557ed0a90448110904827c6f20.pdf',
+                'image' => 'https://assets.snj.co.id/assets/img/cd2a6a98dbb886205a012ef9178e242d.webp',
+                'file'  => 'https://assets.snj.co.id/assets/pdf/57cd4dd81a4ee260376dea7f8b8cc8ab.pdf',
             ],
             [
                 'brand' => 'hira',
@@ -422,7 +421,16 @@ class ProductSeeder extends Seeder
         }
 
         // Soft-delete products that should not appear (per SQL: motorized-valve and armachek-silver are soft-deleted)
-        $softDeleteSlugs = ['motorized-valve', 'armachek-silver'];
+        $softDeleteSlugs = [
+            'motorized-valve',
+            'armachek-silver',
+            'aeroduct-flexible-duct-connector',
+            'aerofoam-insulation',
+            'armaflex-accessories',
+            'bac-evaporative-cooling',
+            'smart-vent',
+            'chiller-sequencing-siemens',
+        ];
         foreach ($softDeleteSlugs as $slug) {
             $product = Product::where('slug', $slug)->first();
             if ($product && !$product->trashed()) {
