@@ -170,7 +170,6 @@
       </div>
     </div>
   </section>
-
   {{-- Brands Carousel --}}
   @if ($brands->count())
     <section id="products" class="border-y border-slate-200 bg-slate-50 py-16 lg:py-24">
@@ -181,49 +180,37 @@
           <p class="mt-3 text-lg text-slate-500">Trusted partners we represent</p>
         </div>
 
-        <div class="group relative">
-          <div id="brandRail" class="mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-4"
-            style="scrollbar-width: none; -ms-overflow-style: none;">
-            @foreach ($brands as $brand)
-              <div
-                class="hover:ring-brand group relative h-56 w-56 shrink-0 cursor-pointer snap-start overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:shadow-xl hover:ring-2 sm:w-64"
-                data-brand-id="{{ $brand->id }}">
-                @if ($brand->image)
-                  <div class="relative h-full w-full p-6">
-                    <img src="{{ $brand->image }}" alt="{{ $brand->name }}"
-                      class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110">
-                    <div
-                      class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    </div>
-                    <div
-                      class="absolute bottom-0 left-0 right-0 translate-y-4 p-4 text-center opacity-0 transition-transform duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                      <h3 class="text-lg font-bold text-white">{{ $brand->name }}</h3>
-                    </div>
-                  </div>
-                @else
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+          @foreach ($brands as $brand)
+            <div
+              class="hover:ring-brand group relative h-56 w-[calc(50%-0.5rem)] shrink-0 cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:shadow-xl hover:ring-2 sm:h-64 sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)] xl:w-[calc(20%-1.2rem)]"
+              data-brand-id="{{ $brand->id }}">
+              @if ($brand->image)
+                <div class="relative h-full w-full p-4 sm:p-6">
+                  <img src="{{ $brand->image }}" alt="{{ $brand->name }}"
+                    class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110">
+
                   <div
-                    class="flex h-full w-full items-center justify-center bg-slate-100 text-slate-400 transition-colors group-hover:bg-slate-200">
-                    <span class="font-medium">{{ $brand->name }}</span>
+                    class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   </div>
-                @endif
-              </div>
-            @endforeach
-          </div>
 
-          <button id="brandPrev" type="button" aria-label="Previous"
-            class="hover:border-brand hover:text-brand absolute left-0 top-1/2 z-10 inline-flex h-12 w-12 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-500 shadow-md backdrop-blur transition-all hover:scale-110 disabled:pointer-events-none disabled:opacity-0">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <button id="brandNext" type="button" aria-label="Next"
-            class="hover:border-brand hover:text-brand absolute right-0 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-500 shadow-md backdrop-blur transition-all hover:scale-110 disabled:pointer-events-none disabled:opacity-0">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+                  <div
+                    class="absolute bottom-0 left-0 right-0 translate-y-4 p-3 text-center opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:p-4">
+                    <h3 class="text-base font-bold text-white sm:text-lg">
+                      {{ $brand->name }}
+                    </h3>
+                  </div>
+                </div>
+              @else
+                <div
+                  class="flex h-full w-full items-center justify-center bg-slate-100 text-slate-400 transition-colors group-hover:bg-slate-200">
+                  <span class="font-medium">{{ $brand->name }}</span>
+                </div>
+              @endif
+            </div>
+          @endforeach
         </div>
+
       </div>
     </section>
   @endif
@@ -261,15 +248,6 @@
   <x-product-catalogue :brands="$brands" :products-by-brand="$productsByBrand" />
 
   <x-contact-section :settings="$settings" />
-
-  {{-- Scroll-To-Top Button --}}
-  <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-    class="bg-brand hover:bg-brand-hover pointer-events-none fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full text-white opacity-0 shadow-lg transition-all duration-300 hover:scale-110"
-    aria-label="Scroll to top">
-    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-    </svg>
-  </button>
 
   <script src="/js/home.js"></script>
 

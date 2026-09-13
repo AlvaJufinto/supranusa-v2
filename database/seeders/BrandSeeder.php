@@ -19,11 +19,26 @@ class BrandSeeder extends Seeder
 			['name' => 'Ducting', 'slug' => 'ducting', 'image' => 'https://assets.snj.co.id/assets/img/06330298c148d28bfbcb0afa9b3820ee.jpg', 'brand_pdf' => 'https://assets.snj.co.id/assets/pdf/7720314c4bd10d3242d67f8b6a79dbd7.pdf'],
 		];
 
-		foreach ($brands as $brand) {
-			Brand::updateOrCreate(
-				['slug' => $brand['slug']],
-				['name' => $brand['name'], 'image' => $brand['image'], 'brand_pdf' => $brand['brand_pdf'], 'order' => 0]
-			);
+		$brandOrder = [
+		    'siemens',
+		    'bac',
+		    'tiger',
+		    'armacell',
+		    'hira',
+		    'vasen',
+		    'ducting',
+		];
+
+		foreach ($brandOrder as $index => $slug) {
+		    $brand = collect($brands)->firstWhere('slug', $slug);
+		    if (!$brand) {
+		        continue;
+		    }
+
+		    Brand::updateOrCreate(
+		        ['slug' => $brand['slug']],
+		        ['name' => $brand['name'], 'image' => $brand['image'], 'brand_pdf' => $brand['brand_pdf'], 'order' => $index + 1]
+		    );
 		}
 	}
 }
