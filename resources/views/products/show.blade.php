@@ -123,9 +123,9 @@
             {{-- Product Image --}}
             <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
               @if ($product->image)
-                <div class="aspect-square">
+                <div>
                   <img src="{{ $product->image }}" alt="{{ $product->name }}"
-                    class="h-full w-full object-cover transition-transform duration-500 hover:scale-105">
+                    class="h-auto w-full transition-transform duration-500 hover:scale-105">
                 </div>
               @elseif ($product->file)
                 <div class="relative h-full overflow-hidden bg-slate-50" data-pdf-preview="{{ $product->file }}">
