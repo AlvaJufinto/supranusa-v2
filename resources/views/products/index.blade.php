@@ -38,7 +38,46 @@
           @endif
         </form>
       </div>
-      @if ($products->count())
+      @if ($isBrandFiltered && $grouped && $grouped->count())
+        @foreach ($grouped as $section)
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">{{ $section['display_name'] }}</h2>
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              @foreach ($section['products'] as $product)
+                <a href="{{ route('products.show', $product->slug) }}"
+                  class="shadow-soft block overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:shadow-md">
+                  @if ($product->image)
+                    <div class="aspect-video bg-slate-100">
+                      <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
+                    </div>
+                  @elseif ($product->file)
+                    <div class="relative aspect-video overflow-hidden bg-slate-100" data-pdf-preview="{{ $product->file }}">
+                      <canvas class="pdf-thumbnail h-full w-full object-cover"></canvas>
+                      <div class="pdf-loading absolute inset-0 flex items-center justify-center bg-slate-100">
+                        <div class="text-center">
+                          <div class="mx-auto mb-1 h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-slate-700"></div>
+                          <span class="text-[10px] text-slate-500">Loading...</span>
+                        </div>
+                      </div>
+                    </div>
+                  @else
+                    <div class="flex aspect-video items-center justify-center bg-slate-100 text-slate-400">No Image</div>
+                  @endif
+                  <div class="p-6">
+                    @if ($product->brand)
+                      <p class="text-brand mb-1 text-xs font-medium">{{ $product->brand->name }}</p>
+                    @endif
+                    <h2 class="mb-2 text-lg font-bold text-slate-800">{{ $product->name }}</h2>
+                    @if ($product->short_description)
+                      <p class="mb-3 line-clamp-2 text-sm text-slate-600">{{ $product->short_description }}</p>
+                    @endif
+                  </div>
+                </a>
+              @endforeach
+            </div>
+          </div>
+        @endforeach
+      @elseif ($products->count())
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           @foreach ($products as $product)
             <a href="{{ route('products.show', $product->slug) }}"

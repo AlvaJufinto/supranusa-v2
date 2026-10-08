@@ -24,7 +24,24 @@ class ProductController extends Controller
 		}
 
 		$products = $query->get();
-		return view('admin.products.index', compact('products', 'brands'));
+
+		$isBrandFiltered = $request->filled('brand_id');
+		$grouped = null;
+
+		if ($isBrandFiltered) {
+			$grouped = $products
+				->filter(fn($p) => $p->bac_category)
+				->groupBy('bac_category')
+				->map(fn($group, $cat) => [
+					'category' => $cat,
+					'display_name' => Str::upper(str_replace('_', ' ', $cat)),
+					'products' => $group->sortBy('order')->values(),
+				])
+				->sortBy(fn($item) => $item['products']->first()?->order ?? 999)
+				->values();
+		}
+
+		return view('admin.products.index', compact('products', 'brands', 'isBrandFiltered', 'grouped'));
 	}
 
 	public function create(): View

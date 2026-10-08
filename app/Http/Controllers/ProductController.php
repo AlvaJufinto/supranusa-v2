@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -39,7 +40,23 @@ class ProductController extends Controller
 
 		$brands = Brand::ordered()->get();
 
-		return view('products.index', compact('products', 'brands'));
+		$isBrandFiltered = $request->filled('brand') && $sort === 'order';
+		$grouped = null;
+
+		if ($isBrandFiltered) {
+			$grouped = $products
+				->filter(fn($p) => $p->bac_category)
+				->groupBy('bac_category')
+				->map(fn($group, $cat) => [
+					'category' => $cat,
+					'display_name' => Str::upper(str_replace('_', ' ', $cat)),
+					'products' => $group->sortBy('order')->values(),
+				])
+				->sortBy(fn($item) => $item['products']->first()?->order ?? 999)
+				->values();
+		}
+
+		return view('products.index', compact('products', 'brands', 'isBrandFiltered', 'grouped'));
 	}
 
 	public function show(Request $request, string $slug): View

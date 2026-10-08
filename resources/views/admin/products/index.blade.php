@@ -38,34 +38,66 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($products as $product)
-            <tr class="border-t border-slate-200">
-                <td class="px-6 py-4">{{ $product->order }}</td>
-                <td class="px-6 py-4">
-                    @if($product->image)
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-10 w-auto object-cover rounded border border-slate-200">
-                    @else
-                        <span class="text-slate-400 text-sm">—</span>
-                    @endif
-                </td>
-                <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
-                <td class="px-6 py-4 text-slate-500">{{ $product->brand?->name }}</td>
-                <td class="px-6 py-4">
-                    <x-status-badge :status="$product->status" />
-                </td>
-                <td class="px-6 py-4">
-                    <a href="{{ route('admin.products.edit', $product) }}" class="text-brand hover:underline mr-3">Edit</a>
-                    <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="inline">
-                        @csrf @method('DELETE')
-                        <button type="submit" data-confirm="Delete this product?" class="text-red-500 hover:underline">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="5" class="px-6 py-8 text-center text-slate-500">No products yet.</td>
-            </tr>
-            @endforelse
+            @if($isBrandFiltered && $grouped && $grouped->count())
+                @foreach($grouped as $section)
+                    <tr class="bg-slate-100">
+                        <td colspan="6" class="px-6 py-3 text-base font-bold text-slate-800">{{ $section['display_name'] }}</td>
+                    </tr>
+                    @foreach($section['products'] as $product)
+                    <tr class="border-t border-slate-200">
+                        <td class="px-6 py-4">{{ $product->order }}</td>
+                        <td class="px-6 py-4">
+                            @if($product->image)
+                                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-10 w-auto object-cover rounded border border-slate-200">
+                            @else
+                                <span class="text-slate-400 text-sm">—</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
+                        <td class="px-6 py-4 text-slate-500">{{ $product->brand?->name }}</td>
+                        <td class="px-6 py-4">
+                            <x-status-badge :status="$product->status" />
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('admin.products.edit', $product) }}" class="text-brand hover:underline mr-3">Edit</a>
+                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" data-confirm="Delete this product?" class="text-red-500 hover:underline">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                @endforeach
+            @else
+                @forelse($products as $product)
+                <tr class="border-t border-slate-200">
+                    <td class="px-6 py-4">{{ $product->order }}</td>
+                    <td class="px-6 py-4">
+                        @if($product->image)
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-10 w-auto object-cover rounded border border-slate-200">
+                        @else
+                            <span class="text-slate-400 text-sm">—</span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
+                    <td class="px-6 py-4 text-slate-500">{{ $product->brand?->name }}</td>
+                    <td class="px-6 py-4">
+                        <x-status-badge :status="$product->status" />
+                    </td>
+                    <td class="px-6 py-4">
+                        <a href="{{ route('admin.products.edit', $product) }}" class="text-brand hover:underline mr-3">Edit</a>
+                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="inline">
+                            @csrf @method('DELETE')
+                            <button type="submit" data-confirm="Delete this product?" class="text-red-500 hover:underline">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="px-6 py-8 text-center text-slate-500">No products yet.</td>
+                </tr>
+                @endforelse
+            @endif
         </tbody>
     </table>
 </div>
