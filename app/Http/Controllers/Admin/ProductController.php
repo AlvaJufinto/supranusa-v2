@@ -47,13 +47,23 @@ class ProductController extends Controller
 	public function create(): View
 	{
 		$brands = Brand::ordered()->get();
-		return view('admin.products.create', compact('brands'));
+		$bacBrand = Brand::where('slug', 'bac')->first();
+		$bacCategories = $bacBrand
+			? Product::where('brand_id', $bacBrand->id)
+				->whereNotNull('bac_category')
+				->distinct()
+				->orderBy('bac_category')
+				->pluck('bac_category')
+			: collect();
+
+		return view('admin.products.create', compact('brands', 'bacBrand', 'bacCategories'));
 	}
 
 	public function store(Request $request, AssetServer $assetServer): RedirectResponse
 	{
 		$data = $request->validate([
 			'brand_id' => 'required|exists:brands,id',
+			'bac_category' => 'nullable|string|max:100',
 			'name' => 'required|string|max:255',
 			'short_description' => 'nullable|string',
 			'description' => 'nullable|string',
@@ -64,6 +74,9 @@ class ProductController extends Controller
 		]);
 
 		$data['slug'] = Str::slug($data['name']);
+		$data['bac_category'] = filled($data['bac_category'] ?? null)
+			? Str::slug($data['bac_category'], '_')
+			: null;
 
 		$pendingUploads = [];
 		if ($request->hasFile('image_file')) {

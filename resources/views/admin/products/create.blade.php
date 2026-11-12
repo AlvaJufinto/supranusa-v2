@@ -22,6 +22,20 @@
                 <input type="text" name="name" value="{{ old('name') }}" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand" required>
             </div>
         </div>
+        @if ($bacBrand)
+            <div id="bacCategoryField" class="{{ old('brand_id') == $bacBrand->id ? '' : 'hidden' }}">
+                <label class="block text-sm font-medium text-slate-700 mb-1">BAC Category</label>
+                <input type="text" name="bac_category" list="bacCategoryList" value="{{ old('bac_category') }}"
+                    placeholder="Pick an existing category or type a new one"
+                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand">
+                <datalist id="bacCategoryList">
+                    @foreach ($bacCategories as $category)
+                        <option value="{{ $category }}">{{ str_replace('_', ' ', $category) }}</option>
+                    @endforeach
+                </datalist>
+                <p class="mt-1 text-xs text-slate-500">Only for BAC products. Type a new name to create a new category.</p>
+            </div>
+        @endif
         <div>
             <label class="block text-sm font-medium text-slate-700 mb-1">Short Description</label>
             <textarea name="short_description" rows="2" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand">{{ old('short_description') }}</textarea>
@@ -59,3 +73,15 @@
     </div>
 </form>
 @endsection
+
+@push('scripts')
+<script>
+    const brandSelect = document.querySelector('select[name="brand_id"]');
+    const bacField = document.getElementById('bacCategoryField');
+    if (brandSelect && bacField) {
+        const sync = () => bacField.classList.toggle('hidden', brandSelect.value !== '{{ $bacBrand?->id }}');
+        brandSelect.addEventListener('change', sync);
+        sync();
+    }
+</script>
+@endpush

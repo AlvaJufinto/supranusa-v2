@@ -5,7 +5,7 @@
     $waNumber = preg_replace('/[^0-9]/', '', $settings['contact_whatsapp']->value);
 
     $waMessage =
-        'Halo Supranusa, saya tertarik dengan produk yang tersedia di website. Mohon bantuannya ya. Terima kasih.';
+        "Hello Supranusa, I'm interested in the products featured on your website. I would appreciate your assistance. Thank you!";
 
     $waUrl = 'https://wa.me/' . $waNumber . '?text=' . urlencode($waMessage);
   @endphp

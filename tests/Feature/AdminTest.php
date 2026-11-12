@@ -188,6 +188,23 @@ class AdminTest extends TestCase
         $this->assertDatabaseHas('products', ['name' => 'Test Product']);
     }
 
+    public function test_admin_can_create_bac_product_with_new_category(): void
+    {
+        $bac = Brand::factory()->create(['slug' => 'bac']);
+
+        $this->actingAsAdmin()->post(route('admin.products.store'), [
+            'brand_id' => $bac->id,
+            'bac_category' => 'Closed Circuit Cooling Tower',
+            'name' => 'BAC Product',
+            'status' => 'active',
+        ]);
+
+        $this->assertDatabaseHas('products', [
+            'name' => 'BAC Product',
+            'bac_category' => 'closed_circuit_cooling_tower',
+        ]);
+    }
+
     public function test_admin_product_requires_brand(): void
     {
         $response = $this->actingAsAdmin()->post(route('admin.products.store'), [

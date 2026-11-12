@@ -1,17 +1,20 @@
 @if ($productsByBrand->count())
 
-  <section id="product-catalogue" class="bg-white py-16 lg:py-24">
+  <section id="product-catalogue"
+    class="{{ $showHeader ?? true ? 'py-16 lg:py-24' : 'pb-16 lg:pb-24' }} bg-white">
     <div class="mx-auto max-w-7xl px-6">
 
       {{-- Header --}}
-      <div class="mb-12 text-center">
-        <h2 class="text-2xl font-extrabold text-slate-800 sm:text-3xl">
-          PRODUCT CATALOGUE
-        </h2>
-        <p class="mt-2 text-slate-500">
-          Browse our products by brand
-        </p>
-      </div>
+      @if ($showHeader ?? true)
+        <div class="mb-12 text-center">
+          <h2 class="text-2xl font-extrabold text-slate-800 sm:text-3xl">
+            PRODUCT CATALOGUE
+          </h2>
+          <p class="mt-2 text-slate-500">
+            Browse our products by brand
+          </p>
+        </div>
+      @endif
 
       {{-- Catalogue Tabs --}}
       <div id="catalogTabs" class="mb-8 flex flex-wrap gap-2 border-b border-slate-200">
