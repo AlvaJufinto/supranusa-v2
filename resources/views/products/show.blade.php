@@ -237,9 +237,9 @@
         </div>
 
 
-</div>
-</section>
+      </div>
+    </section>
 
-@endif
+  @endif
 
 @endsection

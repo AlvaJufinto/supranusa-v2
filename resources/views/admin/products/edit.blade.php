@@ -23,7 +23,7 @@
             class="focus:ring-brand focus:border-brand w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2"
             required>
             @foreach ($brands as $b)
-              <option value="{{ $b->id }}" {{ $product->brand_id == $b->id ? 'selected' : '' }}>
+              <option value="{{ $b->id }}" {{ old('brand_id', $product->brand_id) == $b->id ? 'selected' : '' }}>
                 {{ $b->name }}
               </option>
             @endforeach
@@ -41,6 +41,29 @@
         </div>
 
       </div>
+
+
+      {{-- BAC Category --}}
+      @if ($bacBrand)
+        <div id="bacCategoryField" class="{{ old('brand_id', $product->brand_id) == $bacBrand->id ? '' : 'hidden' }}">
+          <label class="mb-1 block text-sm font-medium text-slate-700">
+            BAC Category
+          </label>
+
+          <input type="text" name="bac_category" list="bacCategoryList"
+            value="{{ old('bac_category', $product->bac_category) }}"
+            placeholder="Pick an existing category or type a new one"
+            class="focus:ring-brand focus:border-brand w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2">
+
+          <datalist id="bacCategoryList">
+            @foreach ($bacCategories as $category)
+              <option value="{{ $category }}">{{ str_replace('_', ' ', $category) }}</option>
+            @endforeach
+          </datalist>
+
+          <p class="mt-1 text-xs text-slate-500">Only for BAC products. Type a new name to create a new category.</p>
+        </div>
+      @endif
 
 
       {{-- Short Description --}}
@@ -183,3 +206,15 @@
 
   </form>
 @endsection
+
+@push('scripts')
+<script>
+  const brandSelect = document.querySelector('select[name="brand_id"]');
+  const bacField = document.getElementById('bacCategoryField');
+  if (brandSelect && bacField) {
+    const sync = () => bacField.classList.toggle('hidden', brandSelect.value !== '{{ $bacBrand?->id }}');
+    brandSelect.addEventListener('change', sync);
+    sync();
+  }
+</script>
+@endpush
