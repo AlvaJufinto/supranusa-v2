@@ -22,10 +22,7 @@ class ProductController extends Controller
 			});
 		}
 
-		if ($request->filled('brand')) {
-			$query->where('brand_id', $request->input('brand'));
-		}
-
+		// ?brand only preselects a tab; the catalogue always shows every brand.
 		$sort = $request->input('sort', 'order');
 		match ($sort) {
 			'name_asc'  => $query->orderBy('name', 'asc'),

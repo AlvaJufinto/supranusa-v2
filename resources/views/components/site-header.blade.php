@@ -75,12 +75,12 @@
                       {{ $group['heading'] }}
                     </p>
 
-                    <div class="grid grid-cols-2 gap-x-6 gap-y-2">
+                    <div class="grid grid-cols-2 gap-x-3 gap-y-1">
 
                       @foreach ($group['products'] as $product)
                         <a href="{{ route('products.show', $product->slug) }}"
-                          class="hover:text-brand block truncate py-0.5 text-sm text-slate-600 hover:underline">
-                          {{ $product->getShortLabel() }}
+                          class="hover:text-brand block break-words py-0.5 text-xs leading-snug text-slate-600 hover:underline">
+                          {{ $product->name }}
                         </a>
                       @endforeach
 

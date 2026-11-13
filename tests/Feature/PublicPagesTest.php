@@ -42,7 +42,7 @@ class PublicPagesTest extends TestCase
         $response->assertSee($activeProduct->name);
     }
 
-    public function test_products_index_filters_by_brand(): void
+    public function test_products_index_preselects_brand_tab_but_shows_all_brands(): void
     {
         $brand1 = Brand::factory()->create();
         $brand2 = Brand::factory()->create();
@@ -53,7 +53,11 @@ class PublicPagesTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee($product1->name);
-        $response->assertDontSee($product2->name);
+        $response->assertSee($product2->name);
+        $response->assertSeeInOrder([
+            'data-catalog-tab="catalog-' . $brand1->id . '"',
+            'aria-selected="true"',
+        ], false);
     }
 
     public function test_products_index_search_works(): void

@@ -16,10 +16,24 @@
       @endif
 
       {{-- Catalogue Tabs --}}
+      @php
+        // On /products: hide brands without results and preselect ?brand=X.
+        // Elsewhere (home): keep every brand, first tab active.
+        $onProductsPage = request()->routeIs('products.index');
+        $catalogueBrands = $onProductsPage
+            ? $brands->filter(
+                fn($brand) => isset($productsByBrand[$brand->id]) && $productsByBrand[$brand->id]->count(),
+            )
+            : $brands;
+        $requestedBrandId = $onProductsPage ? (int) request('brand') : 0;
+        $activeBrandId = $onProductsPage && $catalogueBrands->contains('id', $requestedBrandId)
+            ? $requestedBrandId
+            : $catalogueBrands->first()?->id;
+      @endphp
       <div id="catalogTabs" class="mb-8 flex flex-wrap gap-2 border-b border-slate-200">
-        @foreach ($brands as $index => $brand)
+        @foreach ($catalogueBrands as $brand)
           @php
-            $isActive = $index === 0;
+            $isActive = $brand->id === $activeBrandId;
           @endphp
           <button type="button" data-catalog-tab="catalog-{{ $brand->id }}"
             aria-selected="{{ $isActive ? 'true' : 'false' }}"
@@ -34,9 +48,9 @@
 
         {{-- THE FIX: Relative wrapper to hold all the stacked tabs --}}
         <div class="relative w-full">
-          @foreach ($brands as $index => $brand)
+          @foreach ($catalogueBrands as $brand)
             @php
-              $isActive = $index === 0;
+              $isActive = $brand->id === $activeBrandId;
               // Active: takes up normal space (relative, h-auto)
               $activeClasses =
                   'relative z-10 opacity-100 visible pointer-events-auto h-auto overflow-visible transition-opacity duration-300';

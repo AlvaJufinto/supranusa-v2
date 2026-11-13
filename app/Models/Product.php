@@ -35,16 +35,6 @@ class Product extends Model
         return $query->orderBy('order');
     }
 
-    public function getShortLabel(): string
-    {
-        $name = $this->name;
-        if (str_starts_with($name, 'Series ')) {
-            $parts = explode(' ', $name);
-            return implode(' ', array_slice($parts, 0, 2));
-        }
-        return explode(' ', $name)[0];
-    }
-
     protected static function booted(): void
     {
         static::observe(AssetUploadObserver::class);
