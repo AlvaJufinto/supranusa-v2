@@ -43,11 +43,13 @@
             </a>
           </li>
 
-          <li>
-            <a href="{{ route('articles.index') }}" class="transition hover:text-white">
-              Articles
-            </a>
-          </li>
+          @if ($hasArticles)
+            <li>
+              <a href="{{ route('articles.index') }}" class="transition hover:text-white">
+                Articles
+              </a>
+            </li>
+          @endif
 
           <li>
             <a href="{{ route('contact') }}" class="transition hover:text-white">

@@ -17,18 +17,31 @@
       </div>
 
       {{-- Brand Filters --}}
-      <div class="mb-12 flex flex-wrap justify-center gap-3">
-        <a href="{{ route('projects.index') }}"
-          class="@if (!request('brand')) bg-brand text-white border-brand shadow-soft @else bg-white text-slate-600 border-slate-200 hover:border-brand hover:text-brand hover:bg-brand/5 @endif inline-flex items-center rounded-lg border-2 px-6 py-2.5 font-bold transition-all duration-300">
-          All
-        </a>
+      <div class="mb-12">
+        <div class="flex justify-center">
+          <div
+            class="inline-flex flex-wrap justify-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+            @foreach ($brands as $brand)
+              <a href="{{ route('projects.index', ['brand' => $brand->id]) }}"
+                class="@if ($selectedBrand?->id == $brand->id) bg-brand text-white shadow-soft @else text-slate-600 hover:text-brand hover:bg-brand/5 @endif rounded-lg px-4 py-2 text-sm font-semibold transition-colors duration-200">
+                {{ $brand->name }}
+              </a>
+            @endforeach
+          </div>
+        </div>
 
-        @foreach ($brands as $brand)
-          <a href="{{ route('projects.index', ['brand' => $brand->id]) }}"
-            class="@if (request('brand') == $brand->id) bg-brand text-white border-brand shadow-soft @else bg-white text-slate-600 border-slate-200 hover:border-brand hover:text-brand hover:bg-brand/5 @endif inline-flex items-center rounded-lg border-2 px-6 py-2.5 font-bold transition-all duration-300">
-            {{ $brand->name }}
-          </a>
-        @endforeach
+        @if ($selectedBrand?->brand_pdf)
+          <div class="mt-6 flex justify-center">
+            <a href="{{ asset_url($selectedBrand->brand_pdf) }}" target="_blank" rel="noopener noreferrer"
+              class="bg-brand hover:bg-brand-hover shadow-soft inline-flex items-center gap-2 rounded-lg px-6 py-2.5 font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              View all {{ $selectedBrand->name }} projects (PDF)
+            </a>
+          </div>
+        @endif
       </div>
 
       {{-- Projects --}}
@@ -53,12 +66,6 @@
           </div>
           <h3 class="text-lg font-bold text-slate-900">No projects available</h3>
           <p class="mt-2 text-slate-500">We couldn't find any projects matching your criteria.</p>
-          @if (request('brand'))
-            <a href="{{ route('projects.index') }}"
-              class="bg-brand hover:bg-brand-hover mt-6 inline-flex items-center gap-2 rounded-lg px-6 py-2.5 font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-              Clear Filter
-            </a>
-          @endif
         </div>
 
       @endif

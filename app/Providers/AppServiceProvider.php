@@ -52,7 +52,9 @@ class AppServiceProvider extends ServiceProvider
 		        });
 		    }
 
-		    $view->with(compact('settings', 'navBrands', 'bacGroupedProducts'));
+		    $hasArticles = Article::published()->exists();
+
+		    $view->with(compact('settings', 'navBrands', 'bacGroupedProducts', 'hasArticles'));
 		});
 
 		Relation::enforceMorphMap([

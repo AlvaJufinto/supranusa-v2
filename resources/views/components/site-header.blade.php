@@ -127,10 +127,12 @@
         Projects
       </a>
 
-      <a href="{{ route('articles.index') }}"
-        class="hover:text-brand {{ request()->is('articles*') ? 'nav-active' : '' }} text-sm font-medium text-slate-600">
-        Articles
-      </a>
+      @if ($hasArticles)
+        <a href="{{ route('articles.index') }}"
+          class="hover:text-brand {{ request()->is('articles*') ? 'nav-active' : '' }} text-sm font-medium text-slate-600">
+          Articles
+        </a>
+      @endif
 
       <a href="{{ route('contact') }}"
         class="hover:text-brand {{ request()->is('contact') ? 'nav-active' : '' }} text-sm font-medium text-slate-600">
@@ -187,10 +189,12 @@
         Projects
       </a>
 
-      <a href="{{ route('articles.index') }}"
-        class="hover:text-brand rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">
-        Articles
-      </a>
+      @if ($hasArticles)
+        <a href="{{ route('articles.index') }}"
+          class="hover:text-brand rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">
+          Articles
+        </a>
+      @endif
 
       <a href="{{ route('home') }}#about"
         class="hover:text-brand rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">
